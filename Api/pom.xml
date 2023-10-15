@@ -77,6 +77,7 @@
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <version>5.3.0</version>
+
                 <executions>
                     <execution>
                         <goals>
@@ -86,6 +87,7 @@
                         <configuration>
                             <!-- path to the specification -->
                             <inputSpec>${basedir}/src/main/resources/example-specification.yaml</inputSpec>
+                            <modelNameSuffix>Dto</modelNameSuffix>
                             <!--https://openapi-generator.tech/docs/generators/spring -->
                             <generatorName>spring</generatorName>
                             <library>spring-boot</library>
