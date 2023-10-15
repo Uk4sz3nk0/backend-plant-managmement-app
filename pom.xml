@@ -11,8 +11,12 @@
 	<groupId>com.engineers</groupId>
 	<artifactId>backend-project-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>backend-project-app</name>
 	<description>Backend application of Engineering design</description>
+	<modules>
+		<module>Api</module>
+	</modules>
 	<properties>
 		<java.version>17</java.version>
 		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
@@ -47,6 +51,11 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${org.mapstruct.version}</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>${project.groupId}</groupId>-->
+<!--			<artifactId>Api</artifactId>-->
+<!--			<version>${project.version}</version>-->
+<!--		</dependency>-->
 	</dependencies>
 
 	<build>
