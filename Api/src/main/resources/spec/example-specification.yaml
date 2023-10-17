@@ -1,0 +1,36 @@
+openapi: 3.0.3
+info:
+  title: Example specification
+  description: Example specification
+  version: 1.0.0
+servers:
+  - url: 'http:/localhost:8080'
+paths:
+  /example/getCars:
+    get:
+      description: |
+        Endpoint for getting list of CarDto objects
+      tags:
+        - "Example"
+      operationId: getCars
+      responses:
+        "200":
+          description: Ok. Successful response contains list of CarDto objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Car"
+components:
+  schemas:
+    Car:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        manufacture:
+          type: string
+        model:
+          type: string
