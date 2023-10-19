@@ -34,10 +34,9 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers("/example/getCars").hasAnyRole(ADMIN.name())
+                                .requestMatchers("/example/**").hasAnyRole(ADMIN.name())
                                 .anyRequest()
                                 .authenticated()
-                                .requestMatchers("/h2-console").hasRole(ADMIN.name())
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)

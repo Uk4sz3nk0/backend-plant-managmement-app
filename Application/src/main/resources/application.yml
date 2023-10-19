@@ -1,12 +1,10 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/
-    username: username
-    password: password
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=plantManager_dev
+    username: postgres
+    password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
-#    hibernate:
-#      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:

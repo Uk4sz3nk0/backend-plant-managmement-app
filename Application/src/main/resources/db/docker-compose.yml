@@ -1,0 +1,17 @@
+# TODO: FIX IT
+version: '3'
+services:
+  db:
+    container_name: PlantManagementContainer
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: plantManager
+      POSTGRES_PASSWORD: pl4ntP4ss1234
+      POSTGRES_DB: plantManagementApp
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+volumes:
+  db-data:
