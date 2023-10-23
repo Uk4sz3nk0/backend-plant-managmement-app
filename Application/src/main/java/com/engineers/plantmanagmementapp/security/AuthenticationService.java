@@ -12,7 +12,7 @@ public interface AuthenticationService {
 
     AuthenticationResponse registerUser(final RegisterRequest registerRequest);
 
-    AuthenticationResponse registerUser(final AuthenticationRequest authenticationRequest);
+    AuthenticationResponse authenticateUser(final AuthenticationRequest authenticationRequest);
 
     void refreshToken(final HttpServletRequest request, final HttpServletResponse response) throws IOException;
     

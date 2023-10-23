@@ -1,16 +1,14 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=plantManager_dev
+    url: jdbc:postgresql://localhost:5432/plantManager_db?currentSchema=dev
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+#    generate-ddl: true
 application:
   security:
     jwt:

@@ -1,4 +1,6 @@
 package com.engineers.plantmanagmementapp.record;
 
-public record AuthenticationResponse(String accessToken, String refreshToken) {
+import com.engineers.plantmanagmementapp.model.User;
+
+public record AuthenticationResponse(User user, String accessToken, String refreshToken) {
 }

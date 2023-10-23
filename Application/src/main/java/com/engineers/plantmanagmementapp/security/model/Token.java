@@ -8,16 +8,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "tokens")
 public class Token {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private UUID id;
     @Column(unique = true)
     private String token;
     @Enumerated(EnumType.STRING)
