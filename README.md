@@ -5,7 +5,7 @@ Projekt aplikacji backendowej używanej w projekcie inżynierskim w aplikacji do
 # Technologie
 * Java 17
 * Spring 6
-* Spring Boo 3
+* Spring Boot 3
 * Lombok
 * OpenApi3
 
