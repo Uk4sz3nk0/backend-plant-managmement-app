@@ -103,3 +103,24 @@ components:
           type: string
         role:
           type: string
+        plantation:
+          $ref: "#/components/schemas/Plantation"
+    Plantation:
+      type: object
+      properties:
+        name:
+          type: string
+        nip:
+          type: string
+        regon:
+          type: string
+        city:
+          type: string
+        street:
+          type: string
+        houseNumber:
+          type: integer
+        flatNumber:
+          type: integer
+        postCode:
+          type: string

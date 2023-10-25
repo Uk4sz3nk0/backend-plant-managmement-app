@@ -4,5 +4,5 @@ import com.engineers.plantmanagmementapp.enums.Role;
 import lombok.Builder;
 
 @Builder
-public record RegisterRequest(String firstName, String lastName, String email, String password, Role role) {
+public record RegisterRequest(String firstName, String lastName, String email, String password, Role role, PlantationRecord plantation) {
 }
