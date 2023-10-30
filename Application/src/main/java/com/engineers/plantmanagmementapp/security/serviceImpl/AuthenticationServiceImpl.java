@@ -1,5 +1,6 @@
 package com.engineers.plantmanagmementapp.security.serviceImpl;
 
+import com.engineers.plantmanagmementapp.enums.Role;
 import com.engineers.plantmanagmementapp.enums.TokenType;
 import com.engineers.plantmanagmementapp.model.User;
 import com.engineers.plantmanagmementapp.record.AuthenticationRequest;
@@ -8,8 +9,10 @@ import com.engineers.plantmanagmementapp.record.RegisterRequest;
 import com.engineers.plantmanagmementapp.repository.UserRepository;
 import com.engineers.plantmanagmementapp.security.AuthenticationService;
 import com.engineers.plantmanagmementapp.security.JwtService;
+import com.engineers.plantmanagmementapp.security.model.PlantManagerUser;
 import com.engineers.plantmanagmementapp.security.model.Token;
 import com.engineers.plantmanagmementapp.security.repository.TokenRepository;
+import com.engineers.plantmanagmementapp.service.plantation.PlantationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -34,6 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final PlantationService plantationService;
 
     @Override
     public AuthenticationResponse registerUser(final RegisterRequest request) {
@@ -43,9 +47,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setEmail(request.email());
         user.setPassword(passwordEncoder.encode(request.password()));
         user.setRole(request.role());
-        var savedUser = userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
+        var savedUser = userRepository.saveAndFlush(user);
+        if (request.role().equals(Role.OWNER)) {
+            plantationService.createPlantation(request.plantation(), savedUser);
+        }
+        var appUser = new PlantManagerUser(user);
+        var jwtToken = jwtService.generateToken(appUser);
+        var refreshToken = jwtService.generateRefreshToken(appUser);
         saveUserToken(savedUser, jwtToken);
         return new AuthenticationResponse(user, jwtToken, refreshToken);
     }
@@ -60,8 +68,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
         var user = userRepository.findByEmail(request.email())
                 .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
+        var appUser = new PlantManagerUser(user);
+        var jwtToken = jwtService.generateToken(appUser);
+        var refreshToken = jwtService.generateRefreshToken(appUser);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
         return new AuthenticationResponse(user, jwtToken, refreshToken);
@@ -80,8 +89,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (userEmail != null) {
             var user = this.userRepository.findByEmail(userEmail)
                     .orElseThrow();
-            if (jwtService.isTokenValid(refreshToken, user)) {
-                var accessToken = jwtService.generateToken(user);
+            var appUser = new PlantManagerUser(user);
+            if (jwtService.isTokenValid(refreshToken, appUser)) {
+                var accessToken = jwtService.generateToken(appUser);
                 revokeAllUserTokens(user);
                 saveUserToken(user, accessToken);
                 new ObjectMapper().writeValue(response.getOutputStream(),

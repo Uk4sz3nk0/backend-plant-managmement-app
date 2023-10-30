@@ -21,6 +21,12 @@ import java.util.stream.Collectors;
 public enum Role {
 
     USER(Collections.emptySet()),
+    OWNER(Set.of(
+            Permission.OWNER_READ,
+            Permission.OWNER_CREATE,
+            Permission.OWNER_UPDATE,
+            Permission.OWNER_DELETE
+    )),
     ADMIN(Set.of(
             Permission.ADMIN_READ,
             Permission.ADMIN_CREATE,
