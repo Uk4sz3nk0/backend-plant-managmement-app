@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/plantManager_db?currentSchema=dev
+    url: jdbc:postgresql://localhost:5432/plantManager_db?currentSchema=dev_mig
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver

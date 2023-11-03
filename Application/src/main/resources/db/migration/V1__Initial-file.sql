@@ -1,3 +1,18 @@
+CREATE TABLE IF NOT EXISTS users (
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    first_name varchar(65) NOT NULL,
+    last_name varchar(75) NOT NULL,
+    email varchar(120) NOT NULL UNIQUE,
+    password varchar(256) NOT NULL,
+    role_id BIGINT
+);
+
+CREATE TABLE IF NOT EXISTS roles (
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    name varchar(256) NOT NULL,
+    is_predefined boolean NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS plantations (
     id BIGSERIAL NOT NULL PRIMARY KEY,
     name varchar(256) NOT NULL,
@@ -23,15 +38,6 @@ CREATE TABLE IF NOT EXISTS tokens (
     user_id BIGINT
 );
 
-CREATE TABLE IF NOT EXISTS users (
-    id BIGSERIAL NOT NULL PRIMARY KEY,
-    first_name varchar(65) NOT NULL,
-    last_name varchar(75) NOT NULL,
-    email varchar(120) NOT NULL UNIQUE,
-    password varchar(256) NOT NULL,
-    role_id BIGINT
-);
-
 CREATE TABLE IF NOT EXISTS  user_plantation
 (
     user_id BIGINT NOT NULL REFERENCES users,
@@ -44,17 +50,14 @@ CREATE TABLE IF NOT EXISTS permissions (
   name varchar(256) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS roles (
-    id BIGSERIAL NOT NULL PRIMARY KEY,
-    name varchar(256) NOT NULL,
-    is_predefined boolean NOT NULL,
-);
-
 CREATE TABLE IF NOT EXISTS roles_permissions (
     role_id BIGINT NOT NULL,
     permission_id BIGINT NOT NULL,
-    FOREIGN KEY role_id REFERENCES roles(id),
-    FOREIGN KEY permission_id REFERENCES permissions(id),
+    FOREIGN KEY (role_id) REFERENCES roles(id),
+    FOREIGN KEY (permission_id) REFERENCES permissions(id),
     PRIMARY KEY (role_id, permission_id)
 );
+
+INSERT INTO roles VALUES (1, 'ADMIN', true);
+INSERT INTO roles VALUES (2, 'USER', true);
 

@@ -1,11 +1,12 @@
 package com.engineers.plantmanagmementapp.security.serviceImpl;
 
-import com.engineers.plantmanagmementapp.enums.Role;
 import com.engineers.plantmanagmementapp.enums.TokenType;
+import com.engineers.plantmanagmementapp.model.Role;
 import com.engineers.plantmanagmementapp.model.User;
 import com.engineers.plantmanagmementapp.record.AuthenticationRequest;
 import com.engineers.plantmanagmementapp.record.AuthenticationResponse;
 import com.engineers.plantmanagmementapp.record.RegisterRequest;
+import com.engineers.plantmanagmementapp.repository.RoleRepository;
 import com.engineers.plantmanagmementapp.repository.UserRepository;
 import com.engineers.plantmanagmementapp.security.AuthenticationService;
 import com.engineers.plantmanagmementapp.security.JwtService;
@@ -31,6 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private static final String BEARER_PREFIX = "Bearer ";
     private static final Integer TOKEN_BEGIN_INDEX = 7;
+    private static final String OWNER_ROLE = "ROLE_OWNER";
 
     private final TokenRepository tokenRepository;
     private final UserRepository userRepository;
@@ -38,6 +40,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PlantationService plantationService;
+    private final RoleRepository roleRepo;
 
     @Override
     public AuthenticationResponse registerUser(final RegisterRequest request) {
@@ -46,9 +49,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setLastName(request.lastName());
         user.setEmail(request.email());
         user.setPassword(passwordEncoder.encode(request.password()));
-        user.setRole(request.role());
+        user.setRole(getRole(request.role()));
         var savedUser = userRepository.saveAndFlush(user);
-        if (request.role().equals(Role.OWNER)) {
+        if (request.role().equals(OWNER_ROLE)) {
             plantationService.createPlantation(request.plantation(), savedUser);
         }
         var appUser = new PlantManagerUser(user);
@@ -120,5 +123,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             token.setRevoked(true);
         });
         tokenRepository.saveAll(validUserTokens);
+    }
+
+    private Role getRole(final String role) {
+        return roleRepo.findByName(role).orElseThrow();
     }
 }

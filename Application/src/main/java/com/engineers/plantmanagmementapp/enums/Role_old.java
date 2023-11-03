@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @RequiredArgsConstructor
-public enum Role {
+public enum Role_old {
 
     USER(Collections.emptySet()),
     OWNER(Set.of(
