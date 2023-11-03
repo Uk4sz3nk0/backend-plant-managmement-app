@@ -34,7 +34,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    @Enumerated(EnumType.STRING)
+    @JoinColumn(name = "role_id")
     private Role role;
     @OneToMany(mappedBy = "owner")
     private List<Plantation> ownedPlantations;

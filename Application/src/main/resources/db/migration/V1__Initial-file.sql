@@ -9,7 +9,9 @@ CREATE TABLE IF NOT EXISTS plantations (
     flat_number integer,
     post_code varchar(20) NOT NULL,
     owner_id BIGINT,
-    FOREIGN KEY(owner_id) REFERENCES users(id);
+    role_id BIGINT,
+    FOREIGN KEY(owner_id) REFERENCES users(id),
+    FOREIGN KEY(role_id) REFERENCES roles(id)
 );
 
 CREATE TABLE IF NOT EXISTS tokens (
@@ -27,7 +29,7 @@ CREATE TABLE IF NOT EXISTS users (
     last_name varchar(75) NOT NULL,
     email varchar(120) NOT NULL UNIQUE,
     password varchar(256) NOT NULL,
-    role varchar(65)
+    role_id BIGINT
 );
 
 CREATE TABLE IF NOT EXISTS  user_plantation
@@ -39,7 +41,20 @@ CREATE TABLE IF NOT EXISTS  user_plantation
 
 CREATE TABLE IF NOT EXISTS permissions (
   id BIGSERIAL NOT NULL PRIMARY KEY,
-  permission varchar(256) NOT NULL
+  name varchar(256) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS roles (
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    name varchar(256) NOT NULL,
+    is_predefined boolean NOT NULL,
+);
+
+CREATE TABLE IF NOT EXISTS roles_permissions (
+    role_id BIGINT NOT NULL,
+    permission_id BIGINT NOT NULL,
+    FOREIGN KEY role_id REFERENCES roles(id),
+    FOREIGN KEY permission_id REFERENCES permissions(id),
+    PRIMARY KEY (role_id, permission_id)
+);
 
