@@ -32,14 +32,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private static final String BEARER_PREFIX = "Bearer ";
     private static final Integer TOKEN_BEGIN_INDEX = 7;
-    private static final String OWNER_ROLE = "ROLE_OWNER";
 
     private final TokenRepository tokenRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final PlantationService plantationService;
     private final RoleRepository roleRepo;
 
     @Override
@@ -51,9 +49,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setPassword(passwordEncoder.encode(request.password()));
         user.setRole(getRole(request.role()));
         var savedUser = userRepository.saveAndFlush(user);
-        if (request.role().equals(OWNER_ROLE)) {
-            plantationService.createPlantation(request.plantation(), savedUser);
-        }
         var appUser = new PlantManagerUser(user);
         var jwtToken = jwtService.generateToken(appUser);
         var refreshToken = jwtService.generateRefreshToken(appUser);
