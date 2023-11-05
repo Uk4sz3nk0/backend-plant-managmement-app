@@ -25,9 +25,7 @@ CREATE TABLE IF NOT EXISTS plantations (
     post_code varchar(20) NOT NULL,
     coordinates DOUBLE PRECISION[],
     owner_id BIGINT,
-    role_id BIGINT,
-    FOREIGN KEY(owner_id) REFERENCES users(id),
-    FOREIGN KEY(role_id) REFERENCES roles(id)
+    FOREIGN KEY(owner_id) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS tokens (
@@ -64,5 +62,6 @@ INSERT INTO roles VALUES (2, 'ROLE_OWNER', true);
 INSERT INTO roles VALUES (3, 'ROLE_MANAGER', true);
 INSERT INTO roles VALUES (4, 'ROLE_WAREHOUSEMAN', true);
 INSERT INTO roles VALUES (5, 'ROLE_COLLECTOR', true);
+INSERT INTO roles VALUES (6, 'ROLE_USER', true);
 
 
