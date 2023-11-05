@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class PlantManagerUser implements UserDetails {
 
@@ -16,7 +17,7 @@ public class PlantManagerUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRole().getAuthorities();
+        return Collections.singleton(() -> user.getRole().getName());
     }
 
     @Override

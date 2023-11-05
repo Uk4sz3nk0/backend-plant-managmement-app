@@ -1,14 +1,9 @@
 package com.engineers.plantmanagmementapp.model;
 
-import com.engineers.plantmanagmementapp.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * User - Entity model class
@@ -29,12 +24,13 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "role_id")
     private Role role;
     @OneToMany(mappedBy = "owner")
     private List<Plantation> ownedPlantations;

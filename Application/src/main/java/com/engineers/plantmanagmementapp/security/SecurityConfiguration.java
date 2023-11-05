@@ -13,7 +13,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import static com.engineers.plantmanagmementapp.enums.Role.ADMIN;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -26,6 +25,7 @@ public class SecurityConfiguration {
             "/hello/**",
             "/auth/**"
     };
+    private static final String ADMIN_ROLE = "ADMIN";
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
@@ -37,7 +37,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers("/example/**").hasAnyRole(ADMIN.name())
+                                .requestMatchers("/example/**").hasAnyRole(ADMIN_ROLE)
                                 .anyRequest()
                                 .authenticated()
                 )

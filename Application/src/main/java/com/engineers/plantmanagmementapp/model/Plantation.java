@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -19,7 +18,7 @@ public class Plantation {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private Long id;
     private String name;
     private String nip;
     private String regon;
@@ -28,7 +27,8 @@ public class Plantation {
     private Integer houseNumber;
     private Integer flatNumber;
     private String postCode;
-    @ManyToOne
+    private double[] coordinates;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
     @ManyToMany(mappedBy = "plantations")
