@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS plantations (
     house_number integer NOT NULL,
     flat_number integer,
     post_code varchar(20) NOT NULL,
+    coordinates DOUBLE PRECISION[],
     owner_id BIGINT,
     role_id BIGINT,
     FOREIGN KEY(owner_id) REFERENCES users(id),
@@ -58,6 +59,10 @@ CREATE TABLE IF NOT EXISTS roles_permissions (
     PRIMARY KEY (role_id, permission_id)
 );
 
-INSERT INTO roles VALUES (1, 'ADMIN', true);
-INSERT INTO roles VALUES (2, 'USER', true);
+INSERT INTO roles VALUES (1, 'ROLE_ADMIN', true);
+INSERT INTO roles VALUES (2, 'ROLE_OWNER', true);
+INSERT INTO roles VALUES (3, 'ROLE_MANAGER', true);
+INSERT INTO roles VALUES (4, 'ROLE_WAREHOUSEMAN', true);
+INSERT INTO roles VALUES (5, 'ROLE_COLLECTOR', true);
+
 

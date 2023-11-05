@@ -27,7 +27,8 @@ public class Plantation {
     private Integer houseNumber;
     private Integer flatNumber;
     private String postCode;
-    @ManyToOne
+    private double[] coordinates;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
     @ManyToMany(mappedBy = "plantations")

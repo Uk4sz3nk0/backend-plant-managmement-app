@@ -29,6 +29,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+    @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
     @OneToMany(mappedBy = "owner")
