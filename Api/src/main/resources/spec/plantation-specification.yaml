@@ -56,6 +56,188 @@ paths:
       responses:
         "200":
           description: Ok. Successful response will return OK status.
+  /plantation/get-plantations:
+    description: |
+      Endpoint for getting list of all plantations
+    get:
+      tags:
+        - "Plantation"
+      operationId: getPlantations
+      responses:
+        "200":
+          description: Ok. Successful response will return OK status and list of PlantationDto objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plantation"
+  /plantation/get-plantations-by-user:
+    description: |
+      Endpoint for getting list of plantations by given user id.
+    post:
+      tags:
+        - "Plantation"
+      operationId: getPlantationsByUser
+      parameters:
+        - name: userId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return OK status and list of PlantationDto objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plantation"
+  /plantation/get-plantation-by-id:
+    description: |
+      Endpoint for getting single plantation object specified by given id.
+    post:
+      tags:
+        - "Plantation"
+      operationId: getPlantationById
+      parameters:
+        - name: id
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return OK status and PlantationDto object.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plantation"
+  /plantation/add-area:
+    description: |
+      Endpoint for adding areas (as sectors) into plantations.
+    post:
+      tags:
+        - "Plantations"
+      operationId: addArea
+      parameters:
+        - name: plantationId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Area"
+      responses:
+        "200":
+          description: Ok. Successful response will return OK status.
+  /plantation/edit-area:
+    description: |
+      Endpoint for editing existing area
+    post:
+      tags:
+        - "Plantation"
+      operationId: editArea
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Area"
+      responses:
+        "200":
+          description: Ok. Successful response will return OK status.
+  /plantation/delete-area:
+    description: |
+      Endpoint for deleting area by given id.
+    post:
+      tags:
+        - "Plantation"
+      operationId: deleteArea
+      parameters:
+        - name: areaId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK. Successful response will return OK status.
+  /plantation/get-areas:
+    description: |
+      Endpoint for getting list of areas.
+    get:
+      tags:
+        - "Plantation"
+      operationId: getAreas
+      responses:
+        "200":
+          description: Ok. Successful response will return OK status and list of AreaDto objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Area"
+  /plantation/get-areas-by-plantation:
+    description: |
+      Endpoint for getting list of areas from specific plantations.
+    post:
+      tags:
+        - "Plantation"
+      operationId: getAreasByPlantation
+      parameters:
+        - name: plantationId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return OK status and list of AreaDto objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Area"
+  /plantation/get-area-by-id:
+    description: |
+      Endpoint for getting single one area by id.
+    post:
+      tags:
+        - "Plantation"
+      operationId: getAreaById
+      parameters:
+        - name: areaId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return OK status and AreaDto object specified by given id.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Area"
 components:
   schemas:
     Plantation:
