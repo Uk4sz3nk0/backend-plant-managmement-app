@@ -2,13 +2,14 @@ package com.engineers.plantmanagmementapp.handler.mock;
 
 import com.engineers.plantmanagmementapp.handler.PlantationHandler;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.AreaDto;
+import com.engineers.plantmanagmementapp.rest.plantation.specification.model.CoordinateDto;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.PlantationDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * PlantationHandlerMock - Mock implementation of plantation handler
@@ -20,7 +21,6 @@ import java.util.List;
 
 @Slf4j
 @Service
-@Primary
 @RequiredArgsConstructor
 public class PlantationHandlerMock implements PlantationHandler {
 
@@ -46,31 +46,92 @@ public class PlantationHandlerMock implements PlantationHandler {
 
     @Override
     public AreaDto handleGetAreaById(final Long areaId) {
-        return null;
+        return generateArea(areaId);
     }
 
     @Override
     public List<AreaDto> handleGetAreas() {
-        return null;
+        return List.of(
+                generateArea(1L),
+                generateArea(2L),
+                generateArea(3L),
+                generateArea(4L)
+        );
     }
 
     @Override
     public List<AreaDto> handleGetAreasByPlantation(final Long plantationId) {
-        return null;
+        return List.of(
+                generateArea(1L),
+                generateArea(2L),
+                generateArea(3L),
+                generateArea(4L),
+                generateArea(5L)
+        );
     }
 
     @Override
     public PlantationDto handleGetPlantationById(final Long plantationId) {
-        return null;
+        return generatePlantation(plantationId);
     }
 
     @Override
     public List<PlantationDto> handleGetPlantations() {
-        return null;
+        return List.of(
+                generatePlantation(1L),
+                generatePlantation(2L),
+                generatePlantation(3L),
+                generatePlantation(4L),
+                generatePlantation(5L),
+                generatePlantation(6L)
+        );
     }
 
     @Override
     public List<PlantationDto> handleGetPlantationsByUser(final Long userId) {
-        return null;
+        return List.of(
+                generatePlantation(1L),
+                generatePlantation(2L)
+        );
+    }
+
+    private PlantationDto generatePlantation(final Long id) {
+        final PlantationDto plantation = new PlantationDto();
+        plantation.setId(id);
+        plantation.setName("Plantation_" + id);
+        plantation.setArea(generateArea(id));
+        plantation.setCity("Kraków");
+        plantation.setNip("12332145654");
+        plantation.setHouseNumber(4);
+        plantation.setSectors(List.of(
+                generateArea(1L),
+                generateArea(2L),
+                generateArea(3L),
+                generateArea(4L),
+                generateArea(5L)
+        ));
+        return plantation;
+    }
+
+    private AreaDto generateArea(final Long id) {
+        final AreaDto area = new AreaDto();
+        area.setId(id);
+        area.setName("Area_" + id);
+        area.setPolygonColor("#32a852");
+        area.setCoordinates(List.of(
+                generateCoordinate(1L),
+                generateCoordinate(2L),
+                generateCoordinate(3L),
+                generateCoordinate(4L)
+        ));
+        return area;
+    }
+
+    private CoordinateDto generateCoordinate(final Long id) {
+        final CoordinateDto coordinate = new CoordinateDto();
+        coordinate.setId(id);
+        coordinate.setLatitude(new Random().nextDouble());
+        coordinate.setLongitude(new Random().nextDouble());
+        return coordinate;
     }
 }

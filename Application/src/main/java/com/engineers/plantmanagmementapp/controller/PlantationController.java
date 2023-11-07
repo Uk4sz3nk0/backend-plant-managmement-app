@@ -89,4 +89,6 @@ public class PlantationController implements PlantationApi {
         log.info("Endpoint \"getPlantationByUser\" has called");
         return ResponseEntity.ok(plantationHandler.handleGetPlantationsByUser(userId));
     }
+
+    // TODO: implement delete Area
 }

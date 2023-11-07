@@ -33,4 +33,5 @@ public class Plantation {
     private User owner;
     @ManyToMany(mappedBy = "plantations")
     private List<User> employees;
+    // TODO: Add area and sectors fields
 }
