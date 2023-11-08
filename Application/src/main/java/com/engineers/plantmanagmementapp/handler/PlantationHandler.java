@@ -1,5 +1,6 @@
 package com.engineers.plantmanagmementapp.handler;
 
+import com.engineers.plantmanagmementapp.record.AreaRecord;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.AreaDto;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.PlantationDto;
 
@@ -21,7 +22,11 @@ public interface PlantationHandler {
 
     void handleEditPlantation(final PlantationDto plantationDto);
 
+    void handleAddArea(final AreaDto area, final Long plantationId);
+
     void handleEditArea(final AreaDto areaDto);
+
+    void handleDeleteArea(final Long areaId);
 
     AreaDto handleGetAreaById(final Long areaId);
 

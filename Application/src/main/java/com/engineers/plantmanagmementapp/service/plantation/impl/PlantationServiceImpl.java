@@ -1,5 +1,6 @@
 package com.engineers.plantmanagmementapp.service.plantation.impl;
 
+import com.engineers.plantmanagmementapp.mapper.PlantationMapper;
 import com.engineers.plantmanagmementapp.model.Area;
 import com.engineers.plantmanagmementapp.model.Plantation;
 import com.engineers.plantmanagmementapp.model.User;
@@ -24,7 +25,9 @@ public class PlantationServiceImpl implements PlantationService {
 
     @Override
     public void createPlantation(final PlantationRecord plantation, final User user) {
-
+        final Plantation newPlantation = new Plantation();
+        assignPlantationData(plantation, newPlantation);
+        plantationRepo.saveAndFlush(newPlantation);
     }
 
     @Override
@@ -34,17 +37,36 @@ public class PlantationServiceImpl implements PlantationService {
 
     @Override
     public void editPlantation(final PlantationRecord plantation) {
+        final var editedPlantation = plantationRepo.findById(plantation.id())
+                .orElseThrow();
+        assignPlantationData(plantation, editedPlantation);
+        plantationRepo.save(editedPlantation);
+    }
+
+    @Override
+    public void addArea(final AreaRecord area, final Long plantationId) {
 
     }
 
     @Override
     public void editArea(final AreaRecord area) {
+        final var editedArea = areaRepo.findById(area.id())
+                .orElseThrow();
+        editedArea.setName(area.name());
+        editedArea.setPolygonColor(area.polygonColor());
+        editedArea.setCoordinates(PlantationMapper.INSTANCE.mapCords(area.coordinates()));
+        areaRepo.save(editedArea);
+    }
 
+    @Override
+    public void deleteArea(final Long areaId) {
+        areaRepo.deleteById(areaId);
     }
 
     @Override
     public Area getAreaById(final Long id) {
-        return null;
+        return areaRepo.findById(id)
+                .orElseThrow();
     }
 
     @Override
@@ -54,21 +76,38 @@ public class PlantationServiceImpl implements PlantationService {
 
     @Override
     public List<Area> getAreasByPlantation(final Long plantationId) {
-        return null;
+        final var plantation = plantationRepo.findById(plantationId)
+                .orElseThrow();
+        return plantation.getSectors();
     }
 
     @Override
     public Plantation getPlantationById(final Long id) {
-        return null;
+        return plantationRepo.findById(id)
+                .orElseThrow();
     }
 
     @Override
     public List<Plantation> getPlantations() {
-        return null;
+        return plantationRepo.findAll();
     }
 
     @Override
     public List<Plantation> getPlantationsByUser(final User user) {
-        return null;
+        return plantationRepo.findByOwner(user)
+                .orElseThrow();
+    }
+
+    private void assignPlantationData(PlantationRecord plantation, Plantation newPlantation) {
+        newPlantation.setName(plantation.name());
+        newPlantation.setNip(plantation.nip());
+        newPlantation.setRegon(plantation.regon());
+        newPlantation.setCity(plantation.city());
+        newPlantation.setStreet(plantation.street());
+        newPlantation.setHouseNumber(plantation.houseNumber());
+        newPlantation.setFlatNumber(plantation.flatNumber());
+        newPlantation.setPostCode(plantation.postCode());
+        newPlantation.setArea(PlantationMapper.INSTANCE.map(plantation.area()));
+        newPlantation.setSectors(PlantationMapper.INSTANCE.mapAreas(plantation.sectors()));
     }
 }

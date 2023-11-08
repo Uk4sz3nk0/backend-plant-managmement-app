@@ -48,6 +48,13 @@ public class PlantationController implements PlantationApi {
     }
 
     @Override
+    public ResponseEntity<Void> addArea(final Long plantationId, final AreaDto areaDto) {
+        log.info("Endpoint \"addArea\" has called");
+        plantationHandler.handleAddArea(areaDto, plantationId);
+        return ResponseEntity.ok(null);
+    }
+
+    @Override
     public ResponseEntity<Void> editArea(final AreaDto areaDto) {
         log.info("Endpoint \"editArea\" has called");
         plantationHandler.handleEditArea(areaDto);
@@ -90,5 +97,10 @@ public class PlantationController implements PlantationApi {
         return ResponseEntity.ok(plantationHandler.handleGetPlantationsByUser(userId));
     }
 
-    // TODO: implement delete Area
+    @Override
+    public ResponseEntity<Void> deleteArea(final Long areaId) {
+        log.info("Endpoint \"deleteArea\" has called");
+        plantationHandler.handleDeleteArea(areaId);
+        return ResponseEntity.ok(null);
+    }
 }

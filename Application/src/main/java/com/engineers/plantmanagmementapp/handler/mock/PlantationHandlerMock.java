@@ -1,6 +1,7 @@
 package com.engineers.plantmanagmementapp.handler.mock;
 
 import com.engineers.plantmanagmementapp.handler.PlantationHandler;
+import com.engineers.plantmanagmementapp.record.AreaRecord;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.AreaDto;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.CoordinateDto;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.PlantationDto;
@@ -40,6 +41,11 @@ public class PlantationHandlerMock implements PlantationHandler {
     }
 
     @Override
+    public void handleAddArea(final AreaDto area, final Long plantationId) {
+
+    }
+
+    @Override
     public void handleEditArea(final AreaDto areaDto) {
 
     }
@@ -47,6 +53,11 @@ public class PlantationHandlerMock implements PlantationHandler {
     @Override
     public AreaDto handleGetAreaById(final Long areaId) {
         return generateArea(areaId);
+    }
+
+    @Override
+    public void handleDeleteArea(final Long areaId) {
+
     }
 
     @Override

@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@Table(name = "")
+@Table(name = "areas")
 public class Area {
 
     @Id
@@ -19,5 +21,6 @@ public class Area {
     private Long id;
     private String name;
     private String polygonColor;
-    // TODO: implement coordinates
+    @OneToMany(cascade = CascadeType.ALL)
+    List<Coordinate> coordinates;
 }

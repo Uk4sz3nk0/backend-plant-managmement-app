@@ -18,6 +18,10 @@ public interface PlantationService {
 
     void editArea(final AreaRecord area);
 
+    void addArea(final AreaRecord area, final Long plantationId);
+
+    void deleteArea(final Long areaId);
+
     Area getAreaById(final Long id);
 
     List<Area> getAreas();

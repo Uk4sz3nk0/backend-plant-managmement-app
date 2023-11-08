@@ -50,8 +50,18 @@ public class PlantationHandlerImpl implements PlantationHandler {
     }
 
     @Override
+    public void handleAddArea(final AreaDto area, final Long plantationId) {
+        plantationService.addArea(PlantationMapper.INSTANCE.map(area), plantationId);
+    }
+
+    @Override
     public void handleEditArea(final AreaDto areaDto) {
         plantationService.editArea(PlantationMapper.INSTANCE.map(areaDto));
+    }
+
+    @Override
+    public void handleDeleteArea(final Long areaId) {
+        plantationService.deleteArea(areaId);
     }
 
     @Override

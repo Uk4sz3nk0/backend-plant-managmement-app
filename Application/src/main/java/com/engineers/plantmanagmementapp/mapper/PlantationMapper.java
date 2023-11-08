@@ -1,8 +1,10 @@
 package com.engineers.plantmanagmementapp.mapper;
 
 import com.engineers.plantmanagmementapp.model.Area;
+import com.engineers.plantmanagmementapp.model.Coordinate;
 import com.engineers.plantmanagmementapp.model.Plantation;
 import com.engineers.plantmanagmementapp.record.AreaRecord;
+import com.engineers.plantmanagmementapp.record.CoordinateRecord;
 import com.engineers.plantmanagmementapp.record.PlantationRecord;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.AreaDto;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.PlantationDto;
@@ -21,9 +23,18 @@ public abstract class PlantationMapper {
     public abstract AreaRecord map(final AreaDto areaDto);
 
     public abstract List<AreaDto> map(final List<Area> areas);
+
     public abstract List<PlantationDto> mapToDtoList(final List<Plantation> plantations);
+
     public abstract AreaDto map(final Area area);
 
     public abstract PlantationDto map(final Plantation plantation);
+
+    public abstract List<Coordinate> mapCords(final List<CoordinateRecord> coordinateRecords);
+
+    public abstract Coordinate map(final CoordinateRecord coordinateRecord);
+
+    public abstract Area map(final AreaRecord areaRecord);
+    public abstract List<Area> mapAreas(final List<AreaRecord> areaRecords);
 
 }

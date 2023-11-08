@@ -27,11 +27,13 @@ public class Plantation {
     private Integer houseNumber;
     private Integer flatNumber;
     private String postCode;
-    private double[] coordinates;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
     @ManyToMany(mappedBy = "plantations")
     private List<User> employees;
-    // TODO: Add area and sectors fields
+    @OneToOne(cascade = CascadeType.ALL)
+    private Area area;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Area> sectors;
 }
