@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.engineers</groupId>
         <artifactId>plant-managmement-app</artifactId>
-        <version>0.2.0-SNAPSHOT</version>
+        <version>0.3.0-SNAPSHOT</version>
     </parent>
 
     <properties>
@@ -136,6 +136,29 @@
                                 <dateLibrary>java8</dateLibrary>
                                 <apiPackage>${base.generated.path}.authentication.specification.api</apiPackage>
                                 <modelPackage>${base.generated.path}.authentication.specification.model</modelPackage>
+                                <output>${project.build.directory}</output>
+                                <apis/>
+                                <models/>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-plantation-spec</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/spec/plantation-specification.yaml</inputSpec>
+                            <language>spring</language>
+                            <library>spring-mvc</library>
+                            <generateApiTests>false</generateApiTests>
+                            <modelNameSuffix>Dto</modelNameSuffix>
+                            <configOptions>
+                                <useTags>true</useTags>
+                                <interfaceOnly>true</interfaceOnly>
+                                <dateLibrary>java8</dateLibrary>
+                                <apiPackage>${base.generated.path}.plantation.specification.api</apiPackage>
+                                <modelPackage>${base.generated.path}.plantation.specification.model</modelPackage>
                                 <output>${project.build.directory}</output>
                                 <apis/>
                                 <models/>

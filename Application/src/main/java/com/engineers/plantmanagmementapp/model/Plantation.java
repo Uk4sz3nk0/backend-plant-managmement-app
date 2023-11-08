@@ -17,7 +17,7 @@ import java.util.List;
 public class Plantation {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String nip;
@@ -27,10 +27,19 @@ public class Plantation {
     private Integer houseNumber;
     private Integer flatNumber;
     private String postCode;
-    private double[] coordinates;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
     @ManyToMany(mappedBy = "plantations")
     private List<User> employees;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "area_id")
+    private Area area;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "plantation_sector",
+            joinColumns = @JoinColumn(name = "plantation_id"),
+            inverseJoinColumns = @JoinColumn(name = "sector_area_id")
+    )
+    private List<Area> sectors;
 }
