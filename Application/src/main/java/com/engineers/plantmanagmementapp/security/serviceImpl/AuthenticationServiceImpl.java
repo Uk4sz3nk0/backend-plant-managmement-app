@@ -13,7 +13,6 @@ import com.engineers.plantmanagmementapp.security.JwtService;
 import com.engineers.plantmanagmementapp.security.model.PlantManagerUser;
 import com.engineers.plantmanagmementapp.security.model.Token;
 import com.engineers.plantmanagmementapp.security.repository.TokenRepository;
-import com.engineers.plantmanagmementapp.service.plantation.PlantationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,6 +31,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private static final String BEARER_PREFIX = "Bearer ";
     private static final Integer TOKEN_BEGIN_INDEX = 7;
+
+    private static final Long SECRET_KEY_DURATION = 86400000L; // Day
+    private static final Long REFRESH_KEY_DURATION = 604800000L; // 7 days
 
     private final TokenRepository tokenRepository;
     private final UserRepository userRepository;
@@ -53,7 +55,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var jwtToken = jwtService.generateToken(appUser);
         var refreshToken = jwtService.generateRefreshToken(appUser);
         saveUserToken(savedUser, jwtToken);
-        return new AuthenticationResponse(user, jwtToken, refreshToken);
+        return new AuthenticationResponse(user, jwtToken, SECRET_KEY_DURATION, refreshToken, REFRESH_KEY_DURATION);
     }
 
     @Override
@@ -71,7 +73,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var refreshToken = jwtService.generateRefreshToken(appUser);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
-        return new AuthenticationResponse(user, jwtToken, refreshToken);
+        return new AuthenticationResponse(user, jwtToken, SECRET_KEY_DURATION, refreshToken, REFRESH_KEY_DURATION);
     }
 
     @Override
@@ -93,7 +95,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 revokeAllUserTokens(user);
                 saveUserToken(user, accessToken);
                 new ObjectMapper().writeValue(response.getOutputStream(),
-                        new AuthenticationResponse(user, accessToken, refreshToken));
+                        new AuthenticationResponse(user, accessToken, SECRET_KEY_DURATION, refreshToken, REFRESH_KEY_DURATION));
             }
         }
     }
@@ -121,6 +123,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     private Role getRole(final String role) {
-        return roleRepo.findByName(role).orElseThrow();
+        return roleRepo.findByName(role)
+                .orElseThrow();
     }
 }
