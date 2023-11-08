@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS plantations (
     post_code varchar(20) NOT NULL,
     coordinates DOUBLE PRECISION[],
     owner_id BIGINT,
+    area_id BIGINT,
     FOREIGN KEY(owner_id) REFERENCES users(id)
 );
 

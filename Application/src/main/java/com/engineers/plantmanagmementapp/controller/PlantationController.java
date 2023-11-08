@@ -4,6 +4,7 @@ import com.engineers.plantmanagmementapp.handler.PlantationHandler;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.api.PlantationApi;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.AreaDto;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.PlantationDto;
+import com.engineers.plantmanagmementapp.rest.plantation.specification.model.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -102,5 +103,18 @@ public class PlantationController implements PlantationApi {
         log.info("Endpoint \"deleteArea\" has called");
         plantationHandler.handleDeleteArea(areaId);
         return ResponseEntity.ok(null);
+    }
+
+    @Override
+    public ResponseEntity<Void> addEmployee(final Long plantationId, final Long userId) {
+        log.info("Endpoint \"addEmployee\" has called");
+        plantationHandler.handleAddEmployee(plantationId, userId);
+        return ResponseEntity.ok(null);
+    }
+
+    @Override
+    public ResponseEntity<List<UserDto>> getEmployees(final Long plantationId) {
+        log.info("Endpoint \"getEmployees\" has called");
+        return ResponseEntity.ok(plantationHandler.handleGetEmployees(plantationId));
     }
 }

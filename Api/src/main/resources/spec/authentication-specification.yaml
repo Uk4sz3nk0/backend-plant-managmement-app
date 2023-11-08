@@ -56,6 +56,8 @@ components:
     Role:
       type: object
       properties:
+        name:
+          type: string
         permissions:
           type: array
           items:

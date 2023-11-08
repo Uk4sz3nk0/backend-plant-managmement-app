@@ -6,6 +6,7 @@ import com.engineers.plantmanagmementapp.model.User;
 import com.engineers.plantmanagmementapp.repository.UserRepository;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.AreaDto;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.PlantationDto;
+import com.engineers.plantmanagmementapp.rest.plantation.specification.model.UserDto;
 import com.engineers.plantmanagmementapp.service.plantation.PlantationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -91,13 +92,26 @@ public class PlantationHandlerImpl implements PlantationHandler {
 
     @Override
     public List<PlantationDto> handleGetPlantationsByUser(final Long userId) {
-        final var user = userRepo.findById(userId).orElseThrow();
+        final var user = userRepo.findById(userId)
+                .orElseThrow();
         return PlantationMapper.INSTANCE.mapToDtoList(plantationService.getPlantationsByUser(user));
     }
 
+    @Override
+    public void handleAddEmployee(final Long plantationId, final Long userId) {
+        plantationService.addEmployee(plantationId, userId);
+    }
+
+    @Override
+    public List<UserDto> handleGetEmployees(final Long plantationId) {
+        return PlantationMapper.INSTANCE.mapUsersToDto(plantationService.getEmployees(plantationId));
+    }
+
     private User getUserFromContext() {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final Authentication authentication = SecurityContextHolder.getContext()
+                .getAuthentication();
         final String currentPrincipalEmail = authentication.getName();
-        return userRepo.findByEmail(currentPrincipalEmail).orElseThrow();
+        return userRepo.findByEmail(currentPrincipalEmail)
+                .orElseThrow();
     }
 }

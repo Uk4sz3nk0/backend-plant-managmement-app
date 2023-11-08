@@ -1,10 +1,10 @@
 package com.engineers.plantmanagmementapp.handler.mock;
 
 import com.engineers.plantmanagmementapp.handler.PlantationHandler;
-import com.engineers.plantmanagmementapp.record.AreaRecord;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.AreaDto;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.CoordinateDto;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.PlantationDto;
+import com.engineers.plantmanagmementapp.rest.plantation.specification.model.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -104,6 +104,16 @@ public class PlantationHandlerMock implements PlantationHandler {
                 generatePlantation(1L),
                 generatePlantation(2L)
         );
+    }
+
+    @Override
+    public void handleAddEmployee(final Long plantationId, final Long userId) {
+
+    }
+
+    @Override
+    public List<UserDto> handleGetEmployees(Long plantationId) {
+        return null;
     }
 
     private PlantationDto generatePlantation(final Long id) {

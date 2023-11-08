@@ -3,6 +3,7 @@ package com.engineers.plantmanagmementapp.handler;
 import com.engineers.plantmanagmementapp.record.AreaRecord;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.AreaDto;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.PlantationDto;
+import com.engineers.plantmanagmementapp.rest.plantation.specification.model.UserDto;
 
 import java.util.List;
 
@@ -39,4 +40,8 @@ public interface PlantationHandler {
     List<PlantationDto> handleGetPlantations();
 
     List<PlantationDto> handleGetPlantationsByUser(final Long userId);
+
+    void handleAddEmployee(final Long plantationId, final Long userId);
+
+    List<UserDto> handleGetEmployees(final Long plantationId);
 }

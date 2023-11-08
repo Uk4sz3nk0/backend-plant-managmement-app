@@ -8,6 +8,7 @@ import com.engineers.plantmanagmementapp.record.AreaRecord;
 import com.engineers.plantmanagmementapp.record.PlantationRecord;
 import com.engineers.plantmanagmementapp.repository.AreaRepository;
 import com.engineers.plantmanagmementapp.repository.PlantationRepository;
+import com.engineers.plantmanagmementapp.repository.UserRepository;
 import com.engineers.plantmanagmementapp.service.plantation.PlantationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +23,13 @@ public class PlantationServiceImpl implements PlantationService {
 
     private final PlantationRepository plantationRepo;
     private final AreaRepository areaRepo;
+    private final UserRepository userRepo;
 
     @Override
     public void createPlantation(final PlantationRecord plantation, final User user) {
         final Plantation newPlantation = new Plantation();
         assignPlantationData(plantation, newPlantation);
+        newPlantation.setOwner(user);
         plantationRepo.saveAndFlush(newPlantation);
     }
 
@@ -96,6 +99,24 @@ public class PlantationServiceImpl implements PlantationService {
     public List<Plantation> getPlantationsByUser(final User user) {
         return plantationRepo.findByOwner(user)
                 .orElseThrow();
+    }
+
+    @Override
+    public void addEmployee(final Long plantationId, final Long userId) {
+        final var plantation = plantationRepo.findById(plantationId)
+                .orElseThrow();
+        final var employee = userRepo.findById(userId)
+                .orElseThrow();
+        plantation.getEmployees()
+                .add(employee);
+        plantationRepo.saveAndFlush(plantation);
+    }
+
+    @Override
+    public List<User> getEmployees(final Long plantationId) {
+        final var plantation = plantationRepo.findById(plantationId)
+                .orElseThrow();
+        return plantation.getEmployees();
     }
 
     private void assignPlantationData(PlantationRecord plantation, Plantation newPlantation) {

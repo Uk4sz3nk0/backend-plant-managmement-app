@@ -1,4 +1,4 @@
 package com.engineers.plantmanagmementapp.record;
 
-public record CoordinateRecord(Double latitude, Double longitude) {
+public record CoordinateRecord(Long id, Double latitude, Double longitude) {
 }
