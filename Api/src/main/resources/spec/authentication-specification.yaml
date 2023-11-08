@@ -90,8 +90,14 @@ components:
           $ref: "#/components/schemas/User"
         accessToken:
           type: string
+        accessTokenDuration:
+          type: integer
+          format: int64
         refreshToken:
           type: string
+        refreshTokenDuration:
+          type: integer
+          format: int64
     RegisterRequest:
       type: object
       properties:
