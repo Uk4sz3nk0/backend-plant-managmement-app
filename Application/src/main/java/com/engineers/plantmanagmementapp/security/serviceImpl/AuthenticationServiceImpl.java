@@ -1,6 +1,7 @@
 package com.engineers.plantmanagmementapp.security.serviceImpl;
 
 import com.engineers.plantmanagmementapp.enums.TokenType;
+import com.engineers.plantmanagmementapp.errors.users.UserExistsException;
 import com.engineers.plantmanagmementapp.model.Role;
 import com.engineers.plantmanagmementapp.model.User;
 import com.engineers.plantmanagmementapp.record.AuthenticationRequest;
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -44,6 +47,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse registerUser(final RegisterRequest request) {
+        checkUserExists(request.email());
         var user = new User();
         user.setFirstName(request.firstName());
         user.setLastName(request.lastName());
@@ -125,5 +129,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private Role getRole(final String role) {
         return roleRepo.findByName(role)
                 .orElseThrow();
+    }
+
+    private void checkUserExists(final String email) {
+        final var user = userRepository.findByEmail(email);
+        if (!user.isEmpty()) {
+            throw new UserExistsException("User with email '" + email + "' exists");
+        }
     }
 }

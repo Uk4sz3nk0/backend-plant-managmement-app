@@ -1,5 +1,6 @@
 package com.engineers.plantmanagmementapp.service.users.impl;
 
+import com.engineers.plantmanagmementapp.errors.users.RoleNotExistsException;
 import com.engineers.plantmanagmementapp.repository.RoleRepository;
 import com.engineers.plantmanagmementapp.repository.UserRepository;
 import com.engineers.plantmanagmementapp.service.users.UsersService;
@@ -17,13 +18,12 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public Long setUserRole(final Long userId, final String role) {
-        // TODO: Throw role not exists --> 400 err
         final var foundRole = roleRepo.findByName(role);
         if (!foundRole.isEmpty()) {
             final var user = usersRepo.findById(userId).orElseThrow();
             user.setRole(foundRole.get());
             return usersRepo.save(user).getId();
         }
-        throw new RuntimeException("Role " + role + " not exists");
+        throw new RoleNotExistsException("Role " + role + " not exists");
     }
 }
