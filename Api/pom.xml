@@ -165,6 +165,29 @@
                             </configOptions>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>generate-users-spec</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/spec/users-specification.yaml</inputSpec>
+                            <language>spring</language>
+                            <library>spring-mvc</library>
+                            <generateApiTests>false</generateApiTests>
+                            <modelNameSuffix>Dto</modelNameSuffix>
+                            <configOptions>
+                                <useTags>true</useTags>
+                                <interfaceOnly>true</interfaceOnly>
+                                <dateLibrary>java8</dateLibrary>
+                                <apiPackage>${base.generated.path}.users.specification.api</apiPackage>
+                                <modelPackage>${base.generated.path}.users.specification.model</modelPackage>
+                                <output>${project.build.directory}</output>
+                                <apis/>
+                                <models/>
+                            </configOptions>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
