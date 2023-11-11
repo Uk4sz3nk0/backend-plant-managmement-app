@@ -1,5 +1,6 @@
 package com.engineers.plantmanagmementapp.model;
 
+import com.engineers.plantmanagmementapp.security.model.Container;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,4 +43,6 @@ public class Plantation {
             inverseJoinColumns = @JoinColumn(name = "sector_area_id")
     )
     private List<Area> sectors;
+    @OneToMany(mappedBy = "plantation", cascade = CascadeType.ALL)
+    private List<Container> containers;
 }
