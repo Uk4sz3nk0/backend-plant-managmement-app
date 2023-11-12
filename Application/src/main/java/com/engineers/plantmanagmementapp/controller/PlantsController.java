@@ -26,77 +26,99 @@ public class PlantsController implements PlantsApi {
     private final PlantsHandler plantsHandler;
 
     @Override
-    public ResponseEntity<Void> addPlant(final PlantDto body) {
-        return PlantsApi.super.addPlant(body);
+    public ResponseEntity<Void> addPlant(final PlantDto plantDto) {
+        log.info("'addPlant' endpoint has request");
+        plantsHandler.handleAddPlant(plantDto);
+        return ResponseEntity.ok(null);
     }
 
     @Override
-    public ResponseEntity<Void> addPlantWithVarieties(final PlantDto body) {
-        return PlantsApi.super.addPlantWithVarieties(body);
+    public ResponseEntity<Void> addPlantWithVarieties(final PlantDto plantDto) {
+        log.info("'addPlantWithVarieties' endpoint has called");
+        plantsHandler.handleAddPlantWithVarieties(plantDto);
+        return ResponseEntity.ok(null);
     }
 
     @Override
-    public ResponseEntity<Void> addVariety(final VarietyDto body) {
-        return PlantsApi.super.addVariety(body);
+    public ResponseEntity<Void> addVariety(final VarietyDto varietyDto) {
+        log.info("'addVariety' endpoint has called");
+        plantsHandler.handleAddVariety(varietyDto);
+        return ResponseEntity.ok(null);
     }
 
     @Override
     public ResponseEntity<Void> deletePlant(final Long plantId) {
-        return PlantsApi.super.deletePlant(plantId);
+        log.info("'deletePlant' endpoint has called");
+        plantsHandler.handleDeletePlant(plantId);
+        return ResponseEntity.ok(null);
     }
 
     @Override
     public ResponseEntity<Void> deleteVariety(final Long varietyId) {
-        return PlantsApi.super.deleteVariety(varietyId);
+        log.info("'deleteVariety' endpoint has called");
+        plantsHandler.handleDeleteVariety(varietyId);
+        return ResponseEntity.ok(null);
     }
 
     @Override
-    public ResponseEntity<Void> editPlant(final PlantDto body) {
-        return PlantsApi.super.editPlant(body);
+    public ResponseEntity<Void> editPlant(final PlantDto plantDto) {
+        log.info("'editPlant' endpoint has called");
+        plantsHandler.handleEditPlant(plantDto);
+        return ResponseEntity.ok(null);
     }
 
     @Override
-    public ResponseEntity<Void> editVariety(final VarietyDto body) {
-        return PlantsApi.super.editVariety(body);
+    public ResponseEntity<Void> editVariety(final VarietyDto varietyDto) {
+        log.info("'editVariety' endpoint has called");
+        plantsHandler.handleEditVariety(varietyDto);
+        return ResponseEntity.ok(null);
     }
 
     @Override
     public ResponseEntity<PlantDto> getPlantById(final Long plantId) {
-        return PlantsApi.super.getPlantById(plantId);
+        log.info("'getPlantById' endpoint has called");
+        return ResponseEntity.ok(plantsHandler.handleGetPlantById(plantId));
     }
 
     @Override
     public ResponseEntity<List<PlantDto>> getPlants() {
-        return PlantsApi.super.getPlants();
+        log.info("'getPlants' endpoint has called");
+        return ResponseEntity.ok(plantsHandler.handleGetPlants());
     }
 
     @Override
     public ResponseEntity<List<PlantDto>> getPlantsByName(final String name) {
-        return PlantsApi.super.getPlantsByName(name);
+        log.info("'getPlantsByName' endpoint has called");
+        return ResponseEntity.ok(plantsHandler.handleGetPlantsByName(name));
     }
 
     @Override
     public ResponseEntity<List<PlantDto>> getPlantsByType(final String plantType) {
-        return PlantsApi.super.getPlantsByType(plantType);
+        log.info("'getPlantsByType' endpoint has called");
+        return ResponseEntity.ok(plantsHandler.handleGetPlantsByType(plantType));
     }
 
     @Override
     public ResponseEntity<List<VarietyDto>> getVarieties() {
-        return PlantsApi.super.getVarieties();
+        log.info("'getVarieties' endpoint has called");
+        return ResponseEntity.ok(plantsHandler.handleGetVarieties());
     }
 
     @Override
     public ResponseEntity<List<VarietyDto>> getVarietiesByName(final String name) {
-        return PlantsApi.super.getVarietiesByName(name);
+        log.info("'getVarietiesByName' endpoint has called");
+        return ResponseEntity.ok(plantsHandler.handleGetVarietiesByName(name));
     }
 
     @Override
     public ResponseEntity<List<VarietyDto>> getVarietiesByPlant(final Long plantId) {
-        return PlantsApi.super.getVarietiesByPlant(plantId);
+        log.info("'getVarietiesByPlant' endpoint has called");
+        return ResponseEntity.ok(plantsHandler.handleGetVarietiesByPlant(plantId));
     }
 
     @Override
     public ResponseEntity<VarietyDto> getVarietyById(final Long varietyId) {
-        return PlantsApi.super.getVarietyById(varietyId);
+        log.info("'getVarietyById' endpoint has called");
+        return ResponseEntity.ok(plantsHandler.handleGetVarietyById(varietyId));
     }
 }

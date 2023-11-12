@@ -41,4 +41,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body(e.getLocalizedMessage());
     }
+
+    @ExceptionHandler(PredefinedElementException.class)
+    public ResponseEntity<String> handlePredefinedElementException(final PredefinedElementException e) {
+        log.error(e.getLocalizedMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(e.getLocalizedMessage());
+    }
 }
