@@ -1,0 +1,320 @@
+openapi: 3.0.3
+info:
+  title: Plant specification
+  description: Plant specification
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /plants/add-plant:
+    description: |
+      Endpoint for adding plants
+    post:
+      tags:
+        - "Plants"
+      operationId: addPlant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Plant"
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status.
+  /plants/add-variety:
+    description: |
+      Endpoint for adding new variety
+    post:
+      tags:
+        - "Plants"
+      operationId: addVariety
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Variety"
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status.
+  /plants/add-plant-with-varieties:
+    description: |
+      Endpoint for adding plant with varieties
+    post:
+      tags:
+        - "Plants"
+      operationId: addPlantWithVarieties
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Plant"
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status.
+  /plants/edit-plant:
+    description: |
+      Endpoint for editing plant
+    post:
+      tags:
+        - "Plants"
+      operationId: editPlant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Plant"
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status.
+  /plants/edit-variety:
+    description: |
+      Endpoint for editing variety
+    post:
+      tags:
+        - "Plants"
+      operationId: editVariety
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Variety"
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status.
+  /plants/delete-plant:
+    description: |
+      Endpoint for deleting plant by specific id
+    post:
+      tags:
+        - "Plants"
+      operationId: deletePlant
+      parameters:
+        - name: plantId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status.
+  /plants/delete-variety:
+    description: |
+      Endpoint for deleting variety by specific id.
+    post:
+      tags:
+        - "Plants"
+      operationId: deleteVariety
+      parameters:
+        - name: varietyId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status.
+  /plants/get-plants:
+    description: |
+      Endpoint for getting list of all PlantDto objects
+    get:
+      tags:
+        - "Plants"
+      operationId: getPlants
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status and list of PlantDto objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plant"
+  /plants/get-varieties:
+    description: |
+      Endpoint for getting list of all VarietyDto objects list
+    get:
+      tags:
+        - "Plants"
+      operationId: getVarieties
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status and list of VarietyDto objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Variety"
+  /plants/get-plants-by-type:
+    description: |
+      Endpoint for getting list of plants by plant type
+    post:
+      tags:
+        - "Plants"
+      operationId: getPlantsByType
+      parameters:
+        - name: plantType
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status and list of PlantDto objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plant"
+  /plants/get-plant-by-id:
+    description: |
+      Endpoint for getting PlantDto object by given id
+    post:
+      tags:
+        - "Plants"
+      operationId: getPlantById
+      parameters:
+        - name: plantId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status and specific PlantDto object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+  /plants/get-plants-by-name:
+    description: |
+      Endpoint for getting list of PlantDto by name
+    post:
+      tags:
+        - "Plants"
+      operationId: getPlantsByName
+      parameters:
+        - name: name
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status and list of specific PlantDto objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plant"
+  /plants/get-varieties-by-plant:
+    description: |
+      Endpoint for getting VarietyDto objects list
+    post:
+      tags:
+        - "Plants"
+      operationId: getVarietiesByPlant
+      parameters:
+        - name: plantId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status and list of VarietyDto objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Variety"
+  /plants/get-vatiety-by-id:
+    description: |
+      Endpoint for getting VarietyDto object by id
+    post:
+      tags:
+        - "Plants"
+      operationId: getVarietyById
+      parameters:
+        - name: varietyId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status and VarietyDto object.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Variety"
+  /plants/get-varieties-by-name:
+    description: |
+      Endpoint for getting list of VarietyDto objects by name
+    post:
+      tags:
+        - "Plants"
+      operationId: getVarietiesByName
+      parameters:
+        - name: name
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status and list of VarietyDto objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Variety"
+components:
+  schemas:
+    Plant:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        type:
+          type: string
+        variates:
+          type: array
+          items:
+            $ref: "#/components/schemas/Variety"
+    Variety:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        plantId:
+          type: integer
+          format: int64

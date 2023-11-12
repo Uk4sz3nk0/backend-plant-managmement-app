@@ -1,0 +1,173 @@
+openapi: 3.0.3
+info:
+  title: Container specification
+  description: Container specification 
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /containers/add-container:
+    description: |
+      Endpoint for adding new container
+    post:
+      tags:
+        - "Containers"
+      operationId: addContainer
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Container"
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status.
+  /containers/edit-container:
+    description: |
+      Endpoint for editing containers
+    post:
+      tags:
+        - "Containers"
+      operationId: editContainer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Container"
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status.
+  /containers/delete-container:
+    description: |
+      Endpoint for deleting container by specific id
+    post:
+      tags:
+        - "Containers"
+      operationId: deleteContainer
+      parameters:
+        - name: containerId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status.
+  /containers/get-containers:
+    description: |
+      Endpoint for getting list of ContainerDto objects.
+    post:
+      tags:
+        - "Containers"
+      operationId: getContainers
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status and list of ContainerDto objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Container"
+  /containers/get-containers-by-plantation:
+    description: |
+      Endpoint for getting list of ContainerDto objects by given plantation id.
+    post:
+      tags:
+        - "Containers"
+      operationId: getContainersByPlantation
+      parameters:
+        - name: plantationId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status and list of ContainerDto objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Container"
+  /containers/get-containers-by-owner:
+    description: |
+      Endpoint for getting list of ContainerDto object by given owner id.
+    post:
+      tags:
+        - "Containers"
+      operationId: getContainersByOwner
+      parameters:
+        - name: ownerId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status and list of ContainerDto objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Container"
+  /containers/get-container-by-id:
+    description: |
+      Endpoint for getting specific ContainerDto object by given id.
+    post:
+      tags:
+        - "Containers"
+      operationId: getContainerById
+      parameters:
+        - name: containerId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return ok status and specified ContainerDto object.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Container"
+components:
+  schemas:
+    Container:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        currentCapacity:
+          type: integer
+          format: int64
+        maxCapacity:
+          type: integer
+          format: int64
+        containerUnit:
+          type: string
+        predefined:
+          type: boolean
+        plantationId:
+          type: integer
+          format: int64
+        ownerId:
+          type: integer
+          format: int64
+        plantId:
+          type: integer
+          format: int64
