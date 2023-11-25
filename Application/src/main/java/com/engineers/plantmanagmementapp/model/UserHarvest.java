@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 /**
  * UserHarvest - Entity class that represents detailed harvest info by user in specific day
  * Created on: 2023-11-22
+ *
  * @author Łukasz Wodniak
  */
 
@@ -31,6 +32,9 @@ public class UserHarvest {
     private Integer row;
     private LocalDateTime harvestStart;
     private LocalDateTime harvestEnd;
+    @ManyToOne
+    @JoinColumn(name = "plantation_id")
+    private Plantation plantation;
     @ManyToOne
     @JoinColumn(name = "harvest_id")
     private Harvest harvest;

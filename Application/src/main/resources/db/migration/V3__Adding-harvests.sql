@@ -1,7 +1,9 @@
 CREATE TABLE IF NOT EXISTS harvests (
     id BIGSERIAL NOT NULL PRIMARY KEY,
     season INTEGER NOT NULL,
-    date DATE NOT NULL
+    date DATE NOT NULL,
+    plantation_id BIGINT NOT NULL,
+    FOREIGN KEY (plantation_id) REFERENCES plantations(id)
 );
 
 CREATE TABLE IF NOT EXISTS user_harvests(

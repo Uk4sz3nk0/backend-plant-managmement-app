@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Harvest - Entity class that represents harvests as single day
  * Created on: 2023-11-22
+ *
  * @author Łukasz Wodniak
  */
 
