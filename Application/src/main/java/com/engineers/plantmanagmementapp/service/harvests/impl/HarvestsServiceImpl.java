@@ -1,7 +1,6 @@
 package com.engineers.plantmanagmementapp.service.harvests.impl;
 
-import com.engineers.plantmanagmementapp.model.Harvest;
-import com.engineers.plantmanagmementapp.model.UserHarvest;
+import com.engineers.plantmanagmementapp.model.*;
 import com.engineers.plantmanagmementapp.record.Pagination;
 import com.engineers.plantmanagmementapp.service.harvests.HarvestsService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,7 @@ public class HarvestsServiceImpl implements HarvestsService {
     }
 
     @Override
-    public void addUserHarvest(final UserHarvest userHarvest, final Long sectorId, final Long userId, final Long harvestId, final Long plantationId) {
+    public void addUserHarvest(final UserHarvest userHarvest, final Area sector, final User user, final Harvest harvest, final Plantation plantation) {
 
     }
 
@@ -48,7 +47,7 @@ public class HarvestsServiceImpl implements HarvestsService {
     }
 
     @Override
-    public void editUserHarvest(final UserHarvest userHarvest, final Long sectorId, final Long userId) {
+    public void editUserHarvest(final UserHarvest userHarvest, final Area sector, final User user) {
 
     }
 

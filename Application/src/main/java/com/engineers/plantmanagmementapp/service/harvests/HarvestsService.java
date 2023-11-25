@@ -1,7 +1,6 @@
 package com.engineers.plantmanagmementapp.service.harvests;
 
-import com.engineers.plantmanagmementapp.model.Harvest;
-import com.engineers.plantmanagmementapp.model.UserHarvest;
+import com.engineers.plantmanagmementapp.model.*;
 import com.engineers.plantmanagmementapp.record.Pagination;
 import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
@@ -19,7 +18,7 @@ public interface HarvestsService {
 
     void addHarvest(final Harvest harvest);
 
-    void addUserHarvest(final UserHarvest userHarvest, final Long sectorId, final Long userId, final Long harvestId, final Long plantationId);
+    void addUserHarvest(final UserHarvest userHarvest, final Area sector, final User user, final Harvest harvest, final Plantation plantation);
 
     void deleteHarvest(final Long id);
 
@@ -27,7 +26,7 @@ public interface HarvestsService {
 
     void editHarvest(final Harvest harvest);
 
-    void editUserHarvest(final UserHarvest userHarvest, final Long sectorId, final Long userId);
+    void editUserHarvest(final UserHarvest userHarvest, final Area sector, final User user);
 
     Harvest getHarvestById(final Long id);
 

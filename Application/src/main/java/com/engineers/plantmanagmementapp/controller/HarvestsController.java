@@ -92,22 +92,26 @@ public class HarvestsController implements HarvestsApi {
     }
 
     @Override
-    public ResponseEntity<PagedHarvestDto> getHarvestsInDateRange(Long plantationId, LocalDate startDate, LocalDate endDate, PaginationRequestDto body) {
-        return HarvestsApi.super.getHarvestsInDateRange(plantationId, startDate, endDate, body);
+    public ResponseEntity<PagedHarvestDto> getHarvestsInDateRange(final Long plantationId, final LocalDate startDate, final LocalDate endDate, final PaginationRequestDto paginationRequest) {
+        log.info("Request 'getHarvestsInDateRange' has called");
+        return ResponseEntity.ok(harvestsHandler.handleGetHarvestsInDateRange(plantationId, startDate, endDate, paginationRequest));
     }
 
     @Override
-    public ResponseEntity<UserHarvestDto> getUserHarvestById(Long harvestId) {
-        return HarvestsApi.super.getUserHarvestById(harvestId);
+    public ResponseEntity<UserHarvestDto> getUserHarvestById(final Long harvestId) {
+        log.info("Request 'getUserHarvestById' has called");
+        return ResponseEntity.ok(harvestsHandler.handleGetUserHarvestsById(harvestId));
     }
 
     @Override
-    public ResponseEntity<PagedUserHarvestDto> getUserHarvests(Long userId, PaginationRequestDto body) {
-        return HarvestsApi.super.getUserHarvests(userId, body);
+    public ResponseEntity<PagedUserHarvestDto> getUserHarvests(final Long userId, final PaginationRequestDto paginationRequest) {
+        log.info("Request 'getUserHarvests' has called");
+        return ResponseEntity.ok(harvestsHandler.handleGetUserHarvests(userId, paginationRequest));
     }
 
     @Override
-    public ResponseEntity<PagedUserHarvestDto> getUserHarvestsByPlantation(Long userId, Long plantationId, PaginationRequestDto body) {
-        return HarvestsApi.super.getUserHarvestsByPlantation(userId, plantationId, body);
+    public ResponseEntity<PagedUserHarvestDto> getUserHarvestsByPlantation(final Long userId, final Long plantationId, final PaginationRequestDto paginationRequestDto) {
+        log.info("Request 'getUserHarvestsByPlantation' has called");
+        return ResponseEntity.ok(harvestsHandler.handleGetUserHarvestsByPlantation(userId, plantationId, paginationRequestDto));
     }
 }
