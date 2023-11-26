@@ -29,6 +29,9 @@ public class Harvest {
     private Long id;
     private Integer season;
     private LocalDate date;
+    @ManyToOne
+    @JoinColumn(name = "plantation_id")
+    private Plantation plantation;
     @OneToMany(mappedBy = "harvest", cascade = CascadeType.ALL)
     private List<UserHarvest> userHarvests;
 }

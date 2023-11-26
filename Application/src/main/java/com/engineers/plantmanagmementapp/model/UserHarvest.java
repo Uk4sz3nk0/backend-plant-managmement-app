@@ -33,9 +33,6 @@ public class UserHarvest {
     private LocalDateTime harvestStart;
     private LocalDateTime harvestEnd;
     @ManyToOne
-    @JoinColumn(name = "plantation_id")
-    private Plantation plantation;
-    @ManyToOne
     @JoinColumn(name = "harvest_id")
     private Harvest harvest;
     @ManyToOne

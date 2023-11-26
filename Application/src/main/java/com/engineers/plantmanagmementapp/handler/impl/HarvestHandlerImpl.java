@@ -35,21 +35,21 @@ public class HarvestHandlerImpl implements HarvestsHandler {
     private final PlantationRepository plantationRepository;
 
     @Override
-    public void handleAddHarvest(final HarvestDto harvest) {
-        // TODO: implement mapping
+    public void handleAddHarvest(final HarvestDto harvestDto) {
+        final var plantation = plantationRepository.findById(harvestDto.getPlantationId())
+                .orElseThrow();
+        harvestsService.addHarvest(HarvestsMapper.INSTANCE.map(harvestDto), plantation);
     }
 
     @Override
     public void handleAddUserHarvest(final Long harvestId, final UserHarvestDto userHarvest) {
         final var sector = areaRepository.findById(userHarvest.getSectorId())
-                .orElse(null);
+                .orElseThrow();
         final var user = userRepository.findById(userHarvest.getUserId())
-                .orElse(null);
+                .orElseThrow();
         final var harvest = harvestRepository.findById(harvestId)
-                .orElse(null);
-        final var plantation = plantationRepository.findById(userHarvest.getPlantationId())
-                .orElse(null);
-        harvestsService.addUserHarvest(HarvestsMapper.INSTANCE.map(userHarvest), sector, user, harvest, plantation);
+                .orElseThrow();
+        harvestsService.addUserHarvest(HarvestsMapper.INSTANCE.map(userHarvest), sector, user, harvest);
     }
 
     @Override
@@ -64,15 +64,15 @@ public class HarvestHandlerImpl implements HarvestsHandler {
 
     @Override
     public void handleEditHarvest(final HarvestDto harvest) {
-        // TODO: implement mapping
+        harvestsService.editHarvest(HarvestsMapper.INSTANCE.map(harvest));
     }
 
     @Override
     public void handleEditUserHarvest(final UserHarvestDto userHarvest) {
         final var sector = areaRepository.findById(userHarvest.getSectorId())
-                .orElse(null);
+                .orElseThrow();
         final var user = userRepository.findById(userHarvest.getUserId())
-                .orElse(null);
+                .orElseThrow();
         harvestsService.editUserHarvest(HarvestsMapper.INSTANCE.map(userHarvest), sector, user);
     }
 
@@ -101,21 +101,30 @@ public class HarvestHandlerImpl implements HarvestsHandler {
 
     @Override
     public PagedHarvestDto handleGetHarvestsInDateRange(final Long plantationId, final LocalDate startDate, final LocalDate endDate, final PaginationRequestDto paginationRequest) {
-        return null;
+        final var pagination = HarvestsMapper.INSTANCE.map(paginationRequest);
+        return HarvestsMapper.INSTANCE.map(harvestsService.getHarvestsInDateRange(plantationId, startDate, endDate, pagination));
     }
 
     @Override
     public UserHarvestDto handleGetUserHarvestsById(final Long harvestId) {
-        return null;
+        return HarvestsMapper.INSTANCE.map(harvestsService.getUserHarvestById(harvestId));
     }
 
     @Override
     public PagedUserHarvestDto handleGetUserHarvests(final Long userId, final PaginationRequestDto paginationRequest) {
-        return null;
+        final var pagination = HarvestsMapper.INSTANCE.map(paginationRequest);
+        final var user = userRepository.findById(userId)
+                .orElseThrow();
+        return HarvestsMapper.INSTANCE.mapUserHarvest(harvestsService.getUserHarvests(user, pagination));
     }
 
     @Override
     public PagedUserHarvestDto handleGetUserHarvestsByPlantation(final Long userId, final Long plantationId, final PaginationRequestDto paginationRequest) {
-        return null;
+        final var user = userRepository.findById(userId)
+                .orElseThrow();
+        final var plantation = plantationRepository.findById(plantationId)
+                .orElseThrow();
+        final var pagination = HarvestsMapper.INSTANCE.map(paginationRequest);
+        return HarvestsMapper.INSTANCE.mapUserHarvest(harvestsService.getUserHarvestsByPlantation(user, plantation, pagination));
     }
 }
