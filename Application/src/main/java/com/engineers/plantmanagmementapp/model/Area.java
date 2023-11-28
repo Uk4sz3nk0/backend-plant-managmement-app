@@ -21,6 +21,7 @@ public class Area {
     private Long id;
     private String name;
     private String polygonColor;
+    private Boolean isMainArea;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "area_coordinates",

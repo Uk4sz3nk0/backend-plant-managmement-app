@@ -1,4 +1,4 @@
-package com.engineers.plantmanagmementapp.error.authentication;
+package com.engineers.plantmanagmementapp.errors.authentication;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.ControllerAdvice;

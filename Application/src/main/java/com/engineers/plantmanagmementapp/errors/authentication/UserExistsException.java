@@ -1,4 +1,4 @@
-package com.engineers.plantmanagmementapp.error.authentication;
+package com.engineers.plantmanagmementapp.errors.authentication;
 
 /**
  * UserExistsException - This exception is being thrown while registering new user,

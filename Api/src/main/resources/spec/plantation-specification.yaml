@@ -339,6 +339,8 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Coordinate"
+        isMainArea:
+          type: boolean
     Coordinate:
       type: object
       properties:

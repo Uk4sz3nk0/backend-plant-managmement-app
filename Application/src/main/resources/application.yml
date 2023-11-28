@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/plantManager_db?currentSchema=dev_mig
     username: postgres
-    password: postgres
+    password: pass123
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true

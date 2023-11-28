@@ -48,7 +48,14 @@ public class PlantationServiceImpl implements PlantationService {
 
     @Override
     public void addArea(final AreaRecord area, final Long plantationId) {
-
+        // TODO: Fully implement adding area
+        final Area newArea = new Area();
+        newArea.setIsMainArea(area.isMainArea());
+        newArea.setName(area.name());
+        newArea.setPolygonColor(area.polygonColor());
+//        newArea.setPlantations();
+//        newArea.setCoordinates();
+        areaRepo.saveAndFlush(newArea);
     }
 
     @Override

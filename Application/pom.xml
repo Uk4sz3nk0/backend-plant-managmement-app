@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.engineers</groupId>
         <artifactId>plant-managmement-app</artifactId>
-        <version>0.3.0-SNAPSHOT</version>
+        <version>0.4.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>Application</artifactId>
@@ -65,13 +65,13 @@
         <dependency>
             <groupId>com.engineers</groupId>
             <artifactId>Api</artifactId>
-            <version>0.3.0-SNAPSHOT</version>
+            <version>0.4.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.engineers</groupId>
             <artifactId>Libs</artifactId>
-            <version>0.3.0-SNAPSHOT</version>
+            <version>0.4.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -82,6 +82,11 @@
             <artifactId>mapstruct</artifactId>
             <version>1.5.5.Final</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS coordinates (
 CREATE TABLE IF NOT EXISTS areas (
     id BIGSERIAL NOT NULL PRIMARY KEY,
     name varchar(120) NOT NULL,
-    polygon_color varchar(30)
+    polygon_color varchar(30),
+    is_main_area boolean NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS area_coordinates (
