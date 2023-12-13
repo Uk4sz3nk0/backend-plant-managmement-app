@@ -41,6 +41,7 @@ public abstract class PlantationMapper {
 
     public abstract Coordinate map(final CoordinateRecord coordinateRecord);
 
+    @Mapping(target = "plantations", ignore = true)
     public abstract Area map(final AreaRecord areaRecord);
     public abstract List<Area> mapAreas(final List<AreaRecord> areaRecords);
 

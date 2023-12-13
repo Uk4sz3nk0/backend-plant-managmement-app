@@ -380,6 +380,9 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/UserHarvest"
+        priceForFullContainer:
+          type: number
+          format: double
     UserHarvest:
       type: object
       properties:
