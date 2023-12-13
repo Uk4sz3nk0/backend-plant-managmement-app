@@ -211,6 +211,29 @@
                             </configOptions>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>generate-user-stats-spec</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/spec/user-stats-specification.yaml</inputSpec>
+                            <language>spring</language>
+                            <library>spring-mvc</library>
+                            <generateApiTests>false</generateApiTests>
+                            <modelNameSuffix>Dto</modelNameSuffix>
+                            <configOptions>
+                                <useTags>true</useTags>
+                                <interfaceOnly>true</interfaceOnly>
+                                <dateLibrary>java8</dateLibrary>
+                                <apiPackage>${base.generated.path}.user-stats.specification.api</apiPackage>
+                                <modelPackage>${base.generated.path}.user-stats.specification.model</modelPackage>
+                                <output>${project.build.directory}</output>
+                                <apis/>
+                                <models/>
+                            </configOptions>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>

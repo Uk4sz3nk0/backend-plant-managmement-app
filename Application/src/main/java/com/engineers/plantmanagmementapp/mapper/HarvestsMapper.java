@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.List;
 
 /**
  * HarvestsMapper - Mapper abstract class to map objects in Harvest and UserHarvest operations
@@ -35,15 +36,47 @@ public abstract class HarvestsMapper {
     @Mapping(target = "harvest", ignore = true)
     public abstract UserHarvest map(final UserHarvestDto userHarvest);
 
+    @Mapping(source = "plantation.id", target = "plantationId")
     public abstract HarvestDto map(final Harvest harvest);
 
-    public abstract PagedHarvestDto map(final Page<Harvest> page);
+    public abstract List<HarvestDto> mapList(final List<Harvest> harvestList);
 
-    public abstract PagedUserHarvestDto mapUserHarvest(final Page<UserHarvest> page);
+    public abstract List<UserHarvestDto> mapListOfUserHarvests(final List<UserHarvest> userHarvests);
 
+    public PagedHarvestDto map(final Page<Harvest> page) {
+        final PagedHarvestDto paged = new PagedHarvestDto();
+        final PageDto pageDto = new PageDto();
+        pageDto.setPage(page.getNumber());
+        pageDto.setSize(page.getSize());
+        pageDto.setTotalElements((int) page.getTotalElements());
+        pageDto.setTotalPages(page.getTotalPages());
+
+        paged.setPage(pageDto);
+        paged.setData(mapList(page.getContent()));
+        return paged;
+    }
+
+    public PagedUserHarvestDto mapUserHarvest(final Page<UserHarvest> page) {
+        final PagedUserHarvestDto paged = new PagedUserHarvestDto();
+        final PageDto pageDto = new PageDto();
+        pageDto.setPage(page.getNumber());
+        pageDto.setSize(page.getSize());
+        pageDto.setTotalElements((int) page.getTotalElements());
+        pageDto.setTotalPages(page.getTotalPages());
+
+        paged.setPage(pageDto);
+        paged.setData(mapListOfUserHarvests(page.getContent()));
+        return paged;
+    }
+
+    @Mapping(target = "harvestId", ignore = true)
+    @Mapping(target = "userId", ignore = true)
+    @Mapping(target = "sectorId", ignore = true)
+    @Mapping(target = "plantationId", ignore = true)
     public abstract UserHarvestDto map(final UserHarvest userHarvest);
 
     @Mapping(target = "userHarvests", ignore = true)
+    @Mapping(target = "plantation", ignore = true)
     public abstract Harvest map(final HarvestDto harvest);
 
     public OffsetDateTime map(final LocalDateTime localDateTime) {

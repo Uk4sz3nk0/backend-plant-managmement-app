@@ -34,4 +34,5 @@ public class Harvest {
     private Plantation plantation;
     @OneToMany(mappedBy = "harvest", cascade = CascadeType.ALL)
     private List<UserHarvest> userHarvests;
+    private Double priceForFullContainer;
 }
