@@ -133,7 +133,20 @@ mvn clean install
 
 w celu zbudowania projektu. Następnie w plku flyway.conf w głównym katalogu projektu, podajemy dane do bazy danych do
 której ma zostać wykonan migracja (url, użytkownik, hasło, schemat, driver, itp.).
-Po po daniu danych zapisujemy plik i otiweramy terminal. Przechodzimy do modułu (katalogu) "Application". W tym katalogu
+Po po daniu danych zapisujemy plik. Teraz możemy przejść do migracji lub dodać plik migracyny.
+W celu utworzenia pliku posługujemy się określoną konwencją `V<nr_wersji>__<tytuł>.sql`
+
+Przykładowa zawartość pliku wygląda następująco:
+```sql
+CREATE TABLE example_table (
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+   username varchar(36) NOT NULL,
+   email varchar(90) NOT NULL,
+   building_id BIGINT NOT NULL,
+   FOREIGN KEY (building_id) REFERENCES buildings(id)
+);
+```
+Następnie uruchamiamy terminal i przechodzimy do modułu (katalogu) "Application". W tym katalogu
 wykonujemy kolejno polecenia:
 
 ```

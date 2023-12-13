@@ -3,6 +3,7 @@ package com.engineers.plantmanagmementapp.service.harvests.impl;
 import com.engineers.plantmanagmementapp.model.*;
 import com.engineers.plantmanagmementapp.record.Pagination;
 import com.engineers.plantmanagmementapp.repository.HarvestRepository;
+import com.engineers.plantmanagmementapp.repository.PlantRepository;
 import com.engineers.plantmanagmementapp.repository.PlantationRepository;
 import com.engineers.plantmanagmementapp.repository.UserHarvestRepository;
 import com.engineers.plantmanagmementapp.service.harvests.HarvestsService;
@@ -29,6 +30,7 @@ public class HarvestsServiceImpl implements HarvestsService {
     private final HarvestRepository harvestRepository;
     private final UserHarvestRepository userHarvestRepository;
     private final PlantationRepository plantationRepository;
+    private final PlantRepository plantRepo;
 
     @Override
     public void addHarvest(final Harvest harvest, final Plantation plantation) {
@@ -74,7 +76,8 @@ public class HarvestsServiceImpl implements HarvestsService {
         editUserHarvest.setHarvestEnd(userHarvest.getHarvestEnd());
         editUserHarvest.setSector(sector);
         editUserHarvest.setRow(userHarvest.getRow());
-        editUserHarvest.setPlantName(userHarvest.getPlantName());
+        // TODO: Implement setting plant
+//        editUserHarvest.setPlantName(userHarvest.getPlantName());
         userHarvestRepository.saveAndFlush(editUserHarvest);
     }
 
