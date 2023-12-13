@@ -43,4 +43,5 @@ public interface HarvestsService {
 
     Page<UserHarvest> getUserHarvestsByPlantation(final User user, final Plantation plantation, final Pagination pagination);
 
+    void setPlantForUserHarvest(final Plant plant, final Long userHarvestId);
 }

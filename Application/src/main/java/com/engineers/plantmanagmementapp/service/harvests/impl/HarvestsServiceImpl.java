@@ -3,7 +3,6 @@ package com.engineers.plantmanagmementapp.service.harvests.impl;
 import com.engineers.plantmanagmementapp.model.*;
 import com.engineers.plantmanagmementapp.record.Pagination;
 import com.engineers.plantmanagmementapp.repository.HarvestRepository;
-import com.engineers.plantmanagmementapp.repository.PlantRepository;
 import com.engineers.plantmanagmementapp.repository.PlantationRepository;
 import com.engineers.plantmanagmementapp.repository.UserHarvestRepository;
 import com.engineers.plantmanagmementapp.service.harvests.HarvestsService;
@@ -30,7 +29,6 @@ public class HarvestsServiceImpl implements HarvestsService {
     private final HarvestRepository harvestRepository;
     private final UserHarvestRepository userHarvestRepository;
     private final PlantationRepository plantationRepository;
-    private final PlantRepository plantRepo;
 
     @Override
     public void addHarvest(final Harvest harvest, final Plantation plantation) {
@@ -103,7 +101,8 @@ public class HarvestsServiceImpl implements HarvestsService {
 
     @Override
     public Page<Harvest> getHarvestsBySeason(final Long plantationId, final Integer season, final Pagination pagination) {
-        final var plantation = plantationRepository.findById(plantationId).orElseThrow();
+        final var plantation = plantationRepository.findById(plantationId)
+                .orElseThrow();
         return harvestRepository.findAllByPlantationAndSeason(plantation, season, PageRequest.of(pagination.page(), pagination.size()));
     }
 
@@ -114,7 +113,8 @@ public class HarvestsServiceImpl implements HarvestsService {
 
     @Override
     public UserHarvest getUserHarvestById(final Long id) {
-        return userHarvestRepository.findById(id).orElseThrow();
+        return userHarvestRepository.findById(id)
+                .orElseThrow();
     }
 
     @Override
@@ -125,5 +125,13 @@ public class HarvestsServiceImpl implements HarvestsService {
     @Override
     public Page<UserHarvest> getUserHarvestsByPlantation(final User user, final Plantation plantation, final Pagination pagination) {
         return userHarvestRepository.findAllByUserAndPlantation(user, plantation, PageRequest.of(pagination.page(), pagination.size()));
+    }
+
+    @Override
+    public void setPlantForUserHarvest(final Plant plant, final Long userHarvestId) {
+        final var userHarvest = userHarvestRepository.findById(userHarvestId)
+                .orElseThrow();
+        userHarvest.setPlant(plant);
+        userHarvestRepository.saveAndFlush(userHarvest);
     }
 }

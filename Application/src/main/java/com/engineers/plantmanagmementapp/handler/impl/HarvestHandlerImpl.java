@@ -2,10 +2,7 @@ package com.engineers.plantmanagmementapp.handler.impl;
 
 import com.engineers.plantmanagmementapp.handler.HarvestsHandler;
 import com.engineers.plantmanagmementapp.mapper.HarvestsMapper;
-import com.engineers.plantmanagmementapp.repository.AreaRepository;
-import com.engineers.plantmanagmementapp.repository.HarvestRepository;
-import com.engineers.plantmanagmementapp.repository.PlantationRepository;
-import com.engineers.plantmanagmementapp.repository.UserRepository;
+import com.engineers.plantmanagmementapp.repository.*;
 import com.engineers.plantmanagmementapp.rest.harvests.specification.model.*;
 import com.engineers.plantmanagmementapp.service.harvests.HarvestsService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +30,7 @@ public class HarvestHandlerImpl implements HarvestsHandler {
     private final UserRepository userRepository;
     private final HarvestRepository harvestRepository;
     private final PlantationRepository plantationRepository;
+    private final PlantRepository plantRepository;
 
     @Override
     public void handleAddHarvest(final HarvestDto harvestDto) {
@@ -126,5 +124,11 @@ public class HarvestHandlerImpl implements HarvestsHandler {
                 .orElseThrow();
         final var pagination = HarvestsMapper.INSTANCE.map(paginationRequest);
         return HarvestsMapper.INSTANCE.mapUserHarvest(harvestsService.getUserHarvestsByPlantation(user, plantation, pagination));
+    }
+
+    @Override
+    public void handleSetPlantForUserHarvest(final Long plantId, final Long userHarvestId) {
+        final var plant = plantRepository.findById(plantId).orElseThrow();
+        harvestsService.setPlantForUserHarvest(plant, userHarvestId);
     }
 }

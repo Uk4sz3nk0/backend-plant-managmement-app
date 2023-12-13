@@ -41,4 +41,5 @@ public interface HarvestsHandler {
 
     PagedUserHarvestDto handleGetUserHarvestsByPlantation(final Long userId, final Long plantationId, final PaginationRequestDto paginationRequest);
 
+    void handleSetPlantForUserHarvest(final Long plantId, final Long userHarvestId);
 }
