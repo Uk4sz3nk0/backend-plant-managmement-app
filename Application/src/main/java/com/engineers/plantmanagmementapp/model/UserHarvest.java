@@ -1,6 +1,5 @@
 package com.engineers.plantmanagmementapp.model;
 
-import com.engineers.plantmanagmementapp.enums.PlantName;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,8 +26,9 @@ public class UserHarvest {
     @Id
     @GeneratedValue
     private Long id;
-    @Enumerated(EnumType.STRING)
-    private PlantName plantName;
+    @ManyToOne
+    @JoinColumn(name = "plant_id", nullable = false)
+    private Plant plant;
     private Integer row;
     private LocalDateTime harvestStart;
     private LocalDateTime harvestEnd;

@@ -74,7 +74,8 @@ public class HarvestsServiceImpl implements HarvestsService {
         editUserHarvest.setHarvestEnd(userHarvest.getHarvestEnd());
         editUserHarvest.setSector(sector);
         editUserHarvest.setRow(userHarvest.getRow());
-        editUserHarvest.setPlantName(userHarvest.getPlantName());
+        // TODO: Implement setting plant
+//        editUserHarvest.setPlantName(userHarvest.getPlantName());
         userHarvestRepository.saveAndFlush(editUserHarvest);
     }
 
@@ -100,7 +101,8 @@ public class HarvestsServiceImpl implements HarvestsService {
 
     @Override
     public Page<Harvest> getHarvestsBySeason(final Long plantationId, final Integer season, final Pagination pagination) {
-        final var plantation = plantationRepository.findById(plantationId).orElseThrow();
+        final var plantation = plantationRepository.findById(plantationId)
+                .orElseThrow();
         return harvestRepository.findAllByPlantationAndSeason(plantation, season, PageRequest.of(pagination.page(), pagination.size()));
     }
 
@@ -111,7 +113,8 @@ public class HarvestsServiceImpl implements HarvestsService {
 
     @Override
     public UserHarvest getUserHarvestById(final Long id) {
-        return userHarvestRepository.findById(id).orElseThrow();
+        return userHarvestRepository.findById(id)
+                .orElseThrow();
     }
 
     @Override
@@ -122,5 +125,13 @@ public class HarvestsServiceImpl implements HarvestsService {
     @Override
     public Page<UserHarvest> getUserHarvestsByPlantation(final User user, final Plantation plantation, final Pagination pagination) {
         return userHarvestRepository.findAllByUserAndPlantation(user, plantation, PageRequest.of(pagination.page(), pagination.size()));
+    }
+
+    @Override
+    public void setPlantForUserHarvest(final Plant plant, final Long userHarvestId) {
+        final var userHarvest = userHarvestRepository.findById(userHarvestId)
+                .orElseThrow();
+        userHarvest.setPlant(plant);
+        userHarvestRepository.saveAndFlush(userHarvest);
     }
 }

@@ -360,6 +360,31 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserHarvest"
+  /harvests/set-plant-for-user-harvest:
+    description: |
+      Endpoint for setting plant for UserHarvest.
+    post:
+      tags:
+        - "Harvests"
+      operationId: setPlantForUserHarvest
+      parameters:
+        - name: plantId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+        - name: userHarvestId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return OK status.
 components:
   schemas:
     Harvest:
@@ -389,8 +414,9 @@ components:
         id:
           type: integer
           format: int64
-        plantName:
-          type: string
+        plantId:
+          type: integer
+          format: int64
         row:
           type: integer
         harvestStart:

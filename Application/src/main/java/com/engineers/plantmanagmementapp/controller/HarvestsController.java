@@ -114,4 +114,11 @@ public class HarvestsController implements HarvestsApi {
         log.info("Request 'getUserHarvestsByPlantation' has called");
         return ResponseEntity.ok(harvestsHandler.handleGetUserHarvestsByPlantation(userId, plantationId, paginationRequestDto));
     }
+
+    @Override
+    public ResponseEntity<Void> setPlantForUserHarvest(final Long plantId, final Long userHarvestId) {
+        log.info("Request \"setPlantForUserHarvest\" has called");
+        harvestsHandler.handleSetPlantForUserHarvest(plantId, userHarvestId);
+        return ResponseEntity.ok(null);
+    }
 }
