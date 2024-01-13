@@ -92,8 +92,7 @@ public class PlantationHandlerImpl implements PlantationHandler {
 
     @Override
     public List<PlantationDto> handleGetPlantationsByUser(final Long userId) {
-        final var user = userRepo.findById(userId)
-                .orElseThrow();
+        final var user = getUserFromContext();
         return PlantationMapper.INSTANCE.mapToDtoList(plantationService.getPlantationsByUser(user));
     }
 
