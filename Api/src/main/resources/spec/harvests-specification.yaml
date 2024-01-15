@@ -385,6 +385,58 @@ paths:
       responses:
         "200":
           description: Ok. Successful response will return OK status.
+  /harvests/start-user-harvest:
+    description: |
+      Endpoint for announcing user harvest start
+    post:
+      tags:
+        - "Harvests"
+      operationId: startUserHarvest
+      parameters:
+        - name: userHarvestId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return OK status.
+  /harvests/stop-user-harvest:
+    description: |
+      Endpoint for announcing harvest end
+    post:
+      tags:
+        - "Harvests"
+      operationId: endUserHarvest
+      parameters:
+        - name: userHarvestId
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Ok. Successful response will return OK status.
+  /harvest/get-future-harvests:
+    description: |
+      Endpoint for getting first future 5 harvests
+    post:
+      tags:
+        - "Harvests"
+      operationId: getFutureHarvests
+      responses:
+        "200":
+          description: Ok. Successful response will return OK status and list of HarvestDto objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Harvest"
 components:
   schemas:
     Harvest:

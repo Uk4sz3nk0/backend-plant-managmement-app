@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * HarvestsController - Controller class for any things connected with harvests
@@ -120,5 +121,25 @@ public class HarvestsController implements HarvestsApi {
         log.info("Request \"setPlantForUserHarvest\" has called");
         harvestsHandler.handleSetPlantForUserHarvest(plantId, userHarvestId);
         return ResponseEntity.ok(null);
+    }
+
+    @Override
+    public ResponseEntity<Void> endUserHarvest(final Long userHarvestId) {
+        log.info("Request \"endUserHarvest\" has called");
+        harvestsHandler.handleEndHarvest(userHarvestId);
+        return ResponseEntity.ok(null);
+    }
+
+    @Override
+    public ResponseEntity<Void> startUserHarvest(final Long userHarvestId) {
+        log.info("Request \"startUserHarvest\" has called");
+        harvestsHandler.handleStartHarvest(userHarvestId);
+        return ResponseEntity.ok(null);
+    }
+
+    @Override
+    public ResponseEntity<List<HarvestDto>> getFutureHarvests() {
+        log.info("Request\"getFutureHarvests\" has called");
+        return ResponseEntity.ok(harvestsHandler.handleGetFutureHarvests());
     }
 }

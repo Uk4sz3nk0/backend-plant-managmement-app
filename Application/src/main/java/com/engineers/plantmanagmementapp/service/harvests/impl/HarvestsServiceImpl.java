@@ -13,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * HarvestServiceImpl - Implementation of HarvestService interface
@@ -133,5 +135,36 @@ public class HarvestsServiceImpl implements HarvestsService {
                 .orElseThrow();
         userHarvest.setPlant(plant);
         userHarvestRepository.saveAndFlush(userHarvest);
+    }
+
+    @Override
+    public void startUserHarvest(final Long userHarvestId) {
+        final UserHarvest userHarvest = userHarvestRepository.findById(userHarvestId)
+                .orElseThrow();
+        if (userHarvest.getHarvestStart() != null) {
+            throw new RuntimeException("User harvest has already started");
+        }
+        userHarvest.setHarvestStart(LocalDateTime.now());
+        userHarvestRepository.saveAndFlush(userHarvest);
+    }
+
+    @Override
+    public void endUserHarvest(final Long userHarvestId) {
+        final UserHarvest userHarvest = userHarvestRepository.findById(userHarvestId)
+                .orElseThrow();
+        if (userHarvest.getHarvestStart() == null) {
+            throw new RuntimeException("User harvest hasn't already started");
+        }
+        if (userHarvest.getHarvestEnd() != null) {
+            throw new RuntimeException("User harvest has already ended");
+        }
+        userHarvest.setHarvestEnd(LocalDateTime.now());
+        userHarvestRepository.saveAndFlush(userHarvest);
+    }
+
+    @Override
+    public List<Harvest> getFutureHarvest(final User user) {
+        return harvestRepository.findNextHarvestsForUser(user.getId(), LocalDate.now()
+                .plusDays(5));
     }
 }

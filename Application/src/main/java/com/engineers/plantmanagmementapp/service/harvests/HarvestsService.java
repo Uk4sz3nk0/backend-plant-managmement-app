@@ -5,6 +5,7 @@ import com.engineers.plantmanagmementapp.record.Pagination;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * HarvestService - Service interface
@@ -44,4 +45,8 @@ public interface HarvestsService {
     Page<UserHarvest> getUserHarvestsByPlantation(final User user, final Plantation plantation, final Pagination pagination);
 
     void setPlantForUserHarvest(final Plant plant, final Long userHarvestId);
+
+    void startUserHarvest(final Long userHarvestId);
+    void endUserHarvest(final Long userHarvestId);
+    List<Harvest> getFutureHarvest(final User user);
 }
