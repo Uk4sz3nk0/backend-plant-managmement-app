@@ -44,4 +44,6 @@ public interface PlantationHandler {
     void handleAddEmployee(final Long plantationId, final Long userId);
 
     List<UserDto> handleGetEmployees(final Long plantationId);
+
+    List<PlantationDto> handleGetUserWorkedInPlantations();
 }

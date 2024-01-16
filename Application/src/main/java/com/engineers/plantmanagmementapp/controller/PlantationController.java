@@ -120,6 +120,7 @@ public class PlantationController implements PlantationApi {
 
     @Override
     public ResponseEntity<List<PlantationDto>> getUserWorkedInPlantations() {
-        return PlantationApi.super.getUserWorkedInPlantations();
+        log.info("Request\"getUserWorkedInPlantations\" has called");
+        return ResponseEntity.ok(plantationHandler.handleGetUserWorkedInPlantations());
     }
 }

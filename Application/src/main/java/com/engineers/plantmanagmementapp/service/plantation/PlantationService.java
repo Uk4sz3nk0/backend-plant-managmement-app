@@ -37,4 +37,6 @@ public interface PlantationService {
     void addEmployee(final Long plantationId, final Long userId);
 
     List<User> getEmployees(final Long plantationId);
+
+    List<Plantation> getUserWorkedInPlantations(final User user);
 }

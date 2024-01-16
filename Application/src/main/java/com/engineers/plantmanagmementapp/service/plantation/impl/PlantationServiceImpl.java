@@ -126,6 +126,11 @@ public class PlantationServiceImpl implements PlantationService {
         return plantation.getEmployees();
     }
 
+    @Override
+    public List<Plantation> getUserWorkedInPlantations(final User user) {
+        return plantationRepo.findPlantationsByEmployee(user.getId());
+    }
+
     private void assignPlantationData(PlantationRecord plantation, Plantation newPlantation) {
         newPlantation.setName(plantation.name());
         newPlantation.setNip(plantation.nip());

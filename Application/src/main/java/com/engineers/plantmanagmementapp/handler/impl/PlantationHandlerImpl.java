@@ -2,6 +2,7 @@ package com.engineers.plantmanagmementapp.handler.impl;
 
 import com.engineers.plantmanagmementapp.handler.PlantationHandler;
 import com.engineers.plantmanagmementapp.mapper.PlantationMapper;
+import com.engineers.plantmanagmementapp.model.Plantation;
 import com.engineers.plantmanagmementapp.model.User;
 import com.engineers.plantmanagmementapp.repository.UserRepository;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.AreaDto;
@@ -104,6 +105,12 @@ public class PlantationHandlerImpl implements PlantationHandler {
     @Override
     public List<UserDto> handleGetEmployees(final Long plantationId) {
         return PlantationMapper.INSTANCE.mapUsersToDto(plantationService.getEmployees(plantationId));
+    }
+
+    @Override
+    public List<PlantationDto> handleGetUserWorkedInPlantations() {
+        final User user = getUserFromContext();
+        return PlantationMapper.INSTANCE.mapToDtoList(plantationService.getUserWorkedInPlantations(user));
     }
 
     private User getUserFromContext() {
