@@ -287,7 +287,7 @@ paths:
                 type: array
                 items:
                   $ref: "authentication-specification.yaml#/components/schemas/User"
-  /plantations/get-user-worked-in-plantations:
+  /plantation/get-user-worked-in-plantations:
     description: |
       Endpoint for getting list of plantations in which is user working on
     post:
