@@ -9,6 +9,7 @@ import com.engineers.plantmanagmementapp.rest.plantation.specification.model.Are
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.PlantationDto;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.UserDto;
 import com.engineers.plantmanagmementapp.service.plantation.PlantationService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -98,6 +99,7 @@ public class PlantationHandlerImpl implements PlantationHandler {
     }
 
     @Override
+    @Transactional
     public void handleAddEmployee(final Long plantationId, final Long userId) {
         plantationService.addEmployee(plantationId, userId);
     }

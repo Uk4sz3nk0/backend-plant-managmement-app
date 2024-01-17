@@ -29,6 +29,9 @@ public class PlantationServiceImpl implements PlantationService {
     public void createPlantation(final PlantationRecord plantation, final User user) {
         final Plantation newPlantation = new Plantation();
         assignPlantationData(plantation, newPlantation);
+        final Area mainArea = PlantationMapper.INSTANCE.map(plantation.area());
+        mainArea.setPlantations(List.of(newPlantation));
+        newPlantation.setArea(mainArea);
         newPlantation.setOwner(user);
         plantationRepo.saveAndFlush(newPlantation);
     }
@@ -110,10 +113,17 @@ public class PlantationServiceImpl implements PlantationService {
 
     @Override
     public void addEmployee(final Long plantationId, final Long userId) {
-        final var plantation = plantationRepo.findById(plantationId)
+        final Plantation plantation = plantationRepo.findById(plantationId)
                 .orElseThrow();
-        final var employee = userRepo.findById(userId)
+        final User employee = userRepo.findById(userId)
                 .orElseThrow();
+        if (employee.getPlantations()
+                .contains(plantation) || plantation.getEmployees()
+                .contains(employee)) {
+            throw new RuntimeException("This user / worker has already assigned to this plantation");
+        }
+        employee.getPlantations()
+                .add(plantation);
         plantation.getEmployees()
                 .add(employee);
         plantationRepo.saveAndFlush(plantation);
@@ -140,7 +150,6 @@ public class PlantationServiceImpl implements PlantationService {
         newPlantation.setHouseNumber(plantation.houseNumber());
         newPlantation.setFlatNumber(plantation.flatNumber());
         newPlantation.setPostCode(plantation.postCode());
-        newPlantation.setArea(PlantationMapper.INSTANCE.map(plantation.area()));
         newPlantation.setSectors(PlantationMapper.INSTANCE.mapAreas(plantation.sectors()));
     }
 }
