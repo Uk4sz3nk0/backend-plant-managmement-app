@@ -47,4 +47,6 @@ public interface HarvestsHandler {
     void handleEndHarvest(final Long userHarvestId);
     List<HarvestDto> handleGetFutureHarvests();
 
+    List<UserHarvestDto> handleGetUserHarvestByDate(final LocalDate date, final Long plantationId);
+
 }

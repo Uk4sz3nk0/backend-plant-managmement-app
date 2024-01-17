@@ -142,4 +142,10 @@ public class HarvestsController implements HarvestsApi {
         log.info("Request\"getFutureHarvests\" has called");
         return ResponseEntity.ok(harvestsHandler.handleGetFutureHarvests());
     }
+
+    @Override
+    public ResponseEntity<List<UserHarvestDto>> getUserHarvestByDate(final LocalDate date, final Long plantationId) {
+        log.info("Request \"getUserHarvestByDate\" has called");
+        return ResponseEntity.ok(harvestsHandler.handleGetUserHarvestByDate(date, plantationId));
+    }
 }

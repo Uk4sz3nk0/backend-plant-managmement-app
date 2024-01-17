@@ -2,7 +2,10 @@ package com.engineers.plantmanagmementapp.handler.impl;
 
 import com.engineers.plantmanagmementapp.handler.HarvestsHandler;
 import com.engineers.plantmanagmementapp.mapper.HarvestsMapper;
+import com.engineers.plantmanagmementapp.model.Area;
+import com.engineers.plantmanagmementapp.model.Plant;
 import com.engineers.plantmanagmementapp.model.User;
+import com.engineers.plantmanagmementapp.model.UserHarvest;
 import com.engineers.plantmanagmementapp.repository.*;
 import com.engineers.plantmanagmementapp.rest.harvests.specification.model.*;
 import com.engineers.plantmanagmementapp.service.harvests.HarvestsService;
@@ -14,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,7 +45,8 @@ public class HarvestHandlerImpl implements HarvestsHandler {
     public void handleAddHarvest(final HarvestDto harvestDto) {
         final var plantation = plantationRepository.findById(harvestDto.getPlantationId())
                 .orElseThrow();
-        harvestsService.addHarvest(HarvestsMapper.INSTANCE.map(harvestDto), plantation);
+        final List<UserHarvest> userHarvests = harvestDto.getUserHarvests() != null ? mapUserHarvestsDto(harvestDto.getUserHarvests()) : List.of();
+        harvestsService.addHarvest(HarvestsMapper.INSTANCE.map(harvestDto), plantation, userHarvests);
     }
 
     @Override
@@ -52,7 +57,9 @@ public class HarvestHandlerImpl implements HarvestsHandler {
                 .orElseThrow();
         final var harvest = harvestRepository.findById(harvestId)
                 .orElseThrow();
-        harvestsService.addUserHarvest(HarvestsMapper.INSTANCE.map(userHarvest), sector, user, harvest);
+        final var plant = plantRepository.findById(userHarvest.getPlantId())
+                .orElseThrow();
+        harvestsService.addUserHarvest(HarvestsMapper.INSTANCE.map(userHarvest), sector, user, harvest, plant);
     }
 
     @Override
@@ -133,7 +140,8 @@ public class HarvestHandlerImpl implements HarvestsHandler {
 
     @Override
     public void handleSetPlantForUserHarvest(final Long plantId, final Long userHarvestId) {
-        final var plant = plantRepository.findById(plantId).orElseThrow();
+        final var plant = plantRepository.findById(plantId)
+                .orElseThrow();
         harvestsService.setPlantForUserHarvest(plant, userHarvestId);
     }
 
@@ -153,11 +161,36 @@ public class HarvestHandlerImpl implements HarvestsHandler {
         return HarvestsMapper.INSTANCE.mapList(harvestsService.getFutureHarvest(user));
     }
 
+    @Override
+    public List<UserHarvestDto> handleGetUserHarvestByDate(final LocalDate date, final Long plantationId) {
+        final User user = getUserFromContext();
+        return HarvestsMapper.INSTANCE.mapListOfUserHarvests(harvestsService.getUserHarvestByDate(date, user, plantationId));
+    }
+
     private User getUserFromContext() {
         final Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
         final String currentPrincipalEmail = authentication.getName();
         return userRepo.findByEmail(currentPrincipalEmail)
                 .orElseThrow();
+    }
+
+    private List<UserHarvest> mapUserHarvestsDto(final List<UserHarvestDto> list) {
+        final List<UserHarvest> results = new ArrayList<>();
+        list.forEach(userHarvestDto -> {
+            final UserHarvest userHarvest = new UserHarvest();
+            final Area sector = areaRepository.findById(userHarvestDto.getSectorId())
+                    .orElseThrow();
+            final User employee = userRepository.findById(userHarvestDto.getUserId())
+                    .orElseThrow();
+            final Plant plant = plantRepository.findById(userHarvestDto.getPlantId())
+                    .orElseThrow();
+            userHarvest.setSector(sector);
+            userHarvest.setUser(employee);
+            userHarvest.setRow(userHarvestDto.getRow());
+            userHarvest.setPlant(plant);
+            results.add(userHarvest);
+        });
+        return results;
     }
 }

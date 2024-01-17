@@ -34,7 +34,8 @@ public class SecurityConfiguration {
             "/hello/**",
             "/auth/**",
             "/plantation/get-user-worked-in-plantations",
-            "/plantation/get-plantation-by-id"
+            "/plantation/get-plantation-by-id",
+            "/plantation/get-plantations-by-user"
     };
     private static final String ADMIN_ROLE = "ADMIN";
     private static final String OWNER_ROLE = "OWNER";

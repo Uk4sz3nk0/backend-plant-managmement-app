@@ -16,9 +16,9 @@ import java.util.List;
 
 public interface HarvestsService {
 
-    void addHarvest(final Harvest harvest, final Plantation plantation);
+    void addHarvest(final Harvest harvest, final Plantation plantation, final List<UserHarvest> userHarvests);
 
-    void addUserHarvest(final UserHarvest userHarvest, final Area sector, final User user, final Harvest harvest);
+    void addUserHarvest(final UserHarvest userHarvest, final Area sector, final User user, final Harvest harvest, final Plant plant);
 
     void deleteHarvest(final Long id);
 
@@ -49,4 +49,6 @@ public interface HarvestsService {
     void startUserHarvest(final Long userHarvestId);
     void endUserHarvest(final Long userHarvestId);
     List<Harvest> getFutureHarvest(final User user);
+
+    List<UserHarvest> getUserHarvestByDate(final LocalDate date, final User user, final Long plantationId);
 }

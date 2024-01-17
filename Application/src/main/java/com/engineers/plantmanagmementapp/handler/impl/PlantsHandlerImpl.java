@@ -3,6 +3,7 @@ package com.engineers.plantmanagmementapp.handler.impl;
 import com.engineers.plantmanagmementapp.enums.PlantType;
 import com.engineers.plantmanagmementapp.handler.PlantsHandler;
 import com.engineers.plantmanagmementapp.mapper.PlantsMapper;
+import com.engineers.plantmanagmementapp.model.Plant;
 import com.engineers.plantmanagmementapp.repository.PlantRepository;
 import com.engineers.plantmanagmementapp.rest.plants.specification.model.*;
 import com.engineers.plantmanagmementapp.service.plants.PlantsService;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 
 /**
  * PlantsHandlerImpl - Implementation of PlantsHandler interface
@@ -29,7 +32,9 @@ public class PlantsHandlerImpl implements PlantsHandler {
 
     @Override
     public void handleAddPlant(final PlantDto plantDto) {
-        plantsService.addPlant(PlantsMapper.INSTANCE.map(plantDto));
+        final Plant plant = PlantsMapper.INSTANCE.map(plantDto);
+        plant.setType(getPlantTypeFromInt(plantDto.getPlantType()));
+        plantsService.addPlant(plant);
     }
 
     @Override
@@ -90,5 +95,12 @@ public class PlantsHandlerImpl implements PlantsHandler {
     @Override
     public PlantVarietyDto handleGetVarietyById(final Long varietyId) {
         return PlantsMapper.INSTANCE.map(plantsService.getVarietyById(varietyId));
+    }
+
+    private PlantType getPlantTypeFromInt(final Integer value) {
+        return Arrays.stream(PlantType.values())
+                .filter(f -> f.ordinal() == value)
+                .findFirst()
+                .orElse(PlantType.UNKNOWN);
     }
 }

@@ -39,4 +39,6 @@ public interface PlantationService {
     List<User> getEmployees(final Long plantationId);
 
     List<Plantation> getUserWorkedInPlantations(final User user);
+
+    void deleteEmployeeFromPlantation(final User employee, final Plantation plantation);
 }

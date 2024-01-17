@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 public class UserHarvest {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "plant_id", nullable = false)

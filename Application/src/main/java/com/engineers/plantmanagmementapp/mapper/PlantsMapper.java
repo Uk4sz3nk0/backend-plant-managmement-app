@@ -5,6 +5,7 @@ import com.engineers.plantmanagmementapp.model.PlantVariety;
 import com.engineers.plantmanagmementapp.record.Pagination;
 import com.engineers.plantmanagmementapp.rest.plants.specification.model.*;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 
@@ -22,11 +23,21 @@ public abstract class PlantsMapper {
 
     public static PlantsMapper INSTANCE = Mappers.getMapper(PlantsMapper.class);
 
+    @Mapping(target = "type", ignore = true)
     public abstract Plant map(final PlantDto plantDto);
 
+    @Mapping(target = "plant", ignore = true)
     public abstract PlantVariety map(final PlantVarietyDto plantVarietyDto);
 
-    public abstract PlantDto map(final Plant plant);
+    public PlantDto map(final Plant plant) {
+        final PlantDto plantDto = new PlantDto();
+        plantDto.setId(plant.getId());
+        plantDto.setName(plant.getName());
+        plantDto.setPlantType(plant.getType()
+                .ordinal());
+        plantDto.setPlantVarieties(mapVarieties(plant.getPlantVarieties()));
+        return plantDto;
+    }
 
     public abstract PlantVarietyDto map(final PlantVariety plantVariety);
 

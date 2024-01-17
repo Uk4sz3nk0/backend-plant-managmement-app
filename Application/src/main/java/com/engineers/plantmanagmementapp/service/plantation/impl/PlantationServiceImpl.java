@@ -141,6 +141,16 @@ public class PlantationServiceImpl implements PlantationService {
         return plantationRepo.findPlantationsByEmployee(user.getId());
     }
 
+    @Override
+    public void deleteEmployeeFromPlantation(final User employee, final Plantation plantation) {
+        employee.getPlantations()
+                .remove(plantation);
+        plantation.getEmployees()
+                .remove(employee);
+        userRepo.save(employee);
+        plantationRepo.save(plantation);
+    }
+
     private void assignPlantationData(PlantationRecord plantation, Plantation newPlantation) {
         newPlantation.setName(plantation.name());
         newPlantation.setNip(plantation.nip());
