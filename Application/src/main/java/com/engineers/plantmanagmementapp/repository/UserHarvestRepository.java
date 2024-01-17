@@ -27,6 +27,6 @@ public interface UserHarvestRepository extends JpaRepository<UserHarvest, Long> 
     @Query("SELECT uh FROM UserHarvest uh JOIN uh.harvest h WHERE h.plantation = :plantation AND uh.user = :user")
     Page<UserHarvest> findAllByUserAndPlantation(@Param("user") final User user, @Param("plantation") final Plantation plantation, final Pageable pageable);
 
-    @Query("SELECT uh FROM UserHarvest uh JOIN uh.harvest h WHERE h.plantation = :plantation AND uh.user = :user")
-    List<UserHarvest> findByUserAndDate(@Param("user") final User user, @Param("plantation") final Plantation plantation);
+    @Query("SELECT uh FROM UserHarvest uh JOIN uh.harvest h WHERE h.plantation = :plantation AND h.date = :date AND uh.user = :user")
+    List<UserHarvest> findByUserAndDate(@Param("user") final User user, @Param("plantation") final Plantation plantation, @Param("date") final LocalDate date);
 }
