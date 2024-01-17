@@ -52,13 +52,18 @@ public class PlantationServiceImpl implements PlantationService {
     @Override
     public void addArea(final AreaRecord area, final Long plantationId) {
         // TODO: Fully implement adding area
+        final Plantation plantation = plantationRepo.findById(plantationId)
+                .orElseThrow();
         final Area newArea = new Area();
         newArea.setIsMainArea(area.isMainArea());
         newArea.setName(area.name());
         newArea.setPolygonColor(area.polygonColor());
-//        newArea.setPlantations();
-//        newArea.setCoordinates();
-        areaRepo.saveAndFlush(newArea);
+        newArea.setPlantations(List.of(plantation));
+        newArea.setCoordinates(PlantationMapper.INSTANCE.mapCords(area.coordinates()));
+//        areaRepo.saveAndFlush(newArea);
+        plantation.getSectors()
+                .add(newArea);
+        plantationRepo.saveAndFlush(plantation);
     }
 
     @Override
