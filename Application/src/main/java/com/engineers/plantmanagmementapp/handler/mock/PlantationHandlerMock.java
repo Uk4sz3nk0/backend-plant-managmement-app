@@ -121,6 +121,11 @@ public class PlantationHandlerMock implements PlantationHandler {
         return null;
     }
 
+    @Override
+    public void handleDeleteEmployeeFromPlantation(Long employeeId, Long plantationId) {
+
+    }
+
     private PlantationDto generatePlantation(final Long id) {
         final PlantationDto plantation = new PlantationDto();
         plantation.setId(id);

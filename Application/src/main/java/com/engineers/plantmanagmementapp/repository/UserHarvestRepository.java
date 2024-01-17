@@ -8,6 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
+
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  * UserHarvestRepository - Repository interface for UserHarvest entity
@@ -22,4 +26,7 @@ public interface UserHarvestRepository extends JpaRepository<UserHarvest, Long> 
 
     @Query("SELECT uh FROM UserHarvest uh JOIN uh.harvest h WHERE h.plantation = :plantation AND uh.user = :user")
     Page<UserHarvest> findAllByUserAndPlantation(@Param("user") final User user, @Param("plantation") final Plantation plantation, final Pageable pageable);
+
+    @Query("SELECT uh FROM UserHarvest uh JOIN uh.harvest h WHERE h.plantation = :plantation AND uh.user = :user")
+    List<UserHarvest> findByUserAndDate(@Param("user") final User user, @Param("plantation") final Plantation plantation);
 }

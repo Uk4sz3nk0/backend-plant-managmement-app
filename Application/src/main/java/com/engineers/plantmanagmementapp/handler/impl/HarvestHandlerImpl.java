@@ -161,6 +161,12 @@ public class HarvestHandlerImpl implements HarvestsHandler {
         return HarvestsMapper.INSTANCE.mapList(harvestsService.getFutureHarvest(user));
     }
 
+    @Override
+    public List<UserHarvestDto> handleGetUserHarvestByDate(final LocalDate date, final Long plantationId) {
+        final User user = getUserFromContext();
+        return HarvestsMapper.INSTANCE.mapListOfUserHarvests(harvestsService.getUserHarvestByDate(date, user, plantationId));
+    }
+
     private User getUserFromContext() {
         final Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();

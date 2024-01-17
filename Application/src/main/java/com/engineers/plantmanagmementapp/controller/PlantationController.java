@@ -120,7 +120,14 @@ public class PlantationController implements PlantationApi {
 
     @Override
     public ResponseEntity<List<PlantationDto>> getUserWorkedInPlantations() {
-        log.info("Request\"getUserWorkedInPlantations\" has called");
+        log.info("Request \"getUserWorkedInPlantations\" has called");
         return ResponseEntity.ok(plantationHandler.handleGetUserWorkedInPlantations());
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteEmployee(final Long plantationId, final Long userId) {
+        log.info("Request \"deleteEmployee\" has called");
+        plantationHandler.handleDeleteEmployeeFromPlantation(userId, plantationId);
+        return ResponseEntity.ok(null);
     }
 }

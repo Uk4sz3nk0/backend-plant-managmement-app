@@ -26,7 +26,7 @@ public interface HarvestRepository extends JpaRepository<Harvest, Long> {
 
     Page<Harvest> findAllByPlantationAndSeason(final Plantation plantation, final Integer season, final Pageable pageable);
 
-    @Query(value = "SELECT h FROM Harvest h WHERE h.plantationId = :plantationId AND h.date BETWEEN :startDate AND :endDate", nativeQuery = true)
+    @Query("SELECT h FROM Harvest h WHERE h.plantation.id = :plantationId AND h.date BETWEEN :startDate AND :endDate ORDER BY h.date DESC")
     Page<Harvest> findAllByPlantationInDateRange(@Param("plantationId") final Long plantationId, @Param("startDate") final LocalDate startDate, @Param("endDate") final LocalDate endDate, final Pageable pageable);
 
     @Query("SELECT h FROM Harvest h " +

@@ -173,4 +173,11 @@ public class HarvestsServiceImpl implements HarvestsService {
         return harvestRepository.findNextHarvestsForUser(user.getId(), LocalDate.now()
                 .plusDays(5));
     }
+
+    @Override
+    public List<UserHarvest> getUserHarvestByDate(final LocalDate date, final User user, final Long plantationId) {
+        final Plantation plantation = plantationRepository.findById(plantationId).orElseThrow();
+        final List<UserHarvest> h = userHarvestRepository.findByUserAndDate(user, plantation);
+        return h;
+    }
 }

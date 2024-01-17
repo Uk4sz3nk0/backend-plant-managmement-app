@@ -49,4 +49,6 @@ public interface HarvestsService {
     void startUserHarvest(final Long userHarvestId);
     void endUserHarvest(final Long userHarvestId);
     List<Harvest> getFutureHarvest(final User user);
+
+    List<UserHarvest> getUserHarvestByDate(final LocalDate date, final User user, final Long plantationId);
 }

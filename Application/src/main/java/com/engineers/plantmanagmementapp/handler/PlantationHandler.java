@@ -46,4 +46,6 @@ public interface PlantationHandler {
     List<UserDto> handleGetEmployees(final Long plantationId);
 
     List<PlantationDto> handleGetUserWorkedInPlantations();
+
+    void handleDeleteEmployeeFromPlantation(final Long employeeId, final Long plantationId);
 }

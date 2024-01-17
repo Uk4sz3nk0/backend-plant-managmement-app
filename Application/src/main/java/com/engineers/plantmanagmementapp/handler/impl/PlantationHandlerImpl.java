@@ -4,6 +4,7 @@ import com.engineers.plantmanagmementapp.handler.PlantationHandler;
 import com.engineers.plantmanagmementapp.mapper.PlantationMapper;
 import com.engineers.plantmanagmementapp.model.Plantation;
 import com.engineers.plantmanagmementapp.model.User;
+import com.engineers.plantmanagmementapp.repository.PlantationRepository;
 import com.engineers.plantmanagmementapp.repository.UserRepository;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.AreaDto;
 import com.engineers.plantmanagmementapp.rest.plantation.specification.model.PlantationDto;
@@ -35,6 +36,7 @@ public class PlantationHandlerImpl implements PlantationHandler {
 
     private final PlantationService plantationService;
     private final UserRepository userRepo;
+    private final PlantationRepository plantationRepository;
 
     @Override
     public void handleCreatePlantation(final PlantationDto plantationDto) {
@@ -113,6 +115,13 @@ public class PlantationHandlerImpl implements PlantationHandler {
     public List<PlantationDto> handleGetUserWorkedInPlantations() {
         final User user = getUserFromContext();
         return PlantationMapper.INSTANCE.mapToDtoList(plantationService.getUserWorkedInPlantations(user));
+    }
+
+    @Override
+    public void handleDeleteEmployeeFromPlantation(final Long employeeId, final Long plantationId) {
+        final User employee = userRepo.findById(employeeId).orElseThrow();
+        final Plantation plantation = plantationRepository.findById(plantationId).orElseThrow();
+        plantationService.deleteEmployeeFromPlantation(employee, plantation);
     }
 
     private User getUserFromContext() {
