@@ -33,6 +33,7 @@ public interface HarvestRepository extends JpaRepository<Harvest, Long> {
             "JOIN h.userHarvests uh " +
             "WHERE uh.user.id = :userId " +
             "AND h.date BETWEEN CURRENT_DATE AND :endDate " +
+            "AND uh.user.id = :userId " +
             "ORDER BY h.date ASC")
     List<Harvest> findNextHarvestsForUser(@Param("userId") final Long userId, @Param("endDate") final LocalDate endDate);
 }

@@ -32,7 +32,9 @@ public class SecurityConfiguration {
 
     private static final String[] WHITE_LIST_URL = {
             "/hello/**",
-            "/auth/**"
+            "/auth/**",
+            "/plantation/get-user-worked-in-plantations",
+            "/plantation/get-plantation-by-id"
     };
     private static final String ADMIN_ROLE = "ADMIN";
     private static final String OWNER_ROLE = "OWNER";
