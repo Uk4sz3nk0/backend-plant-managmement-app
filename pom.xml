@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.engineers</groupId>
 	<artifactId>plant-managmement-app</artifactId>
-	<version>0.8.0-SNAPSHOT</version>
+	<version>0.9.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>plant-managmement-app</name>
 	<description>Backend application project</description>
