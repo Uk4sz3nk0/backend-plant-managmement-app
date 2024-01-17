@@ -265,7 +265,7 @@ paths:
           description: Ok. Successful response will return OK status.
   /plantation/delete-employe:
     description: |
-      Endpoint for deleting employees to plantation.
+      Endpoint for deleting employees to plantation by id.
     post:
       tags:
         - "Plantation"
