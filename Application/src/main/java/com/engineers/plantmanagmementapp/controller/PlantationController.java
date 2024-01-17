@@ -117,4 +117,10 @@ public class PlantationController implements PlantationApi {
         log.info("Endpoint \"getEmployees\" has called");
         return ResponseEntity.ok(plantationHandler.handleGetEmployees(plantationId));
     }
+
+    @Override
+    public ResponseEntity<List<PlantationDto>> getUserWorkedInPlantations() {
+        log.info("Request\"getUserWorkedInPlantations\" has called");
+        return ResponseEntity.ok(plantationHandler.handleGetUserWorkedInPlantations());
+    }
 }

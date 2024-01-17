@@ -3,6 +3,7 @@ package com.engineers.plantmanagmementapp.handler;
 import com.engineers.plantmanagmementapp.rest.harvests.specification.model.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * HarvestsHandler - Handler interface for Harvest and UserHarvest object operations
@@ -42,4 +43,8 @@ public interface HarvestsHandler {
     PagedUserHarvestDto handleGetUserHarvestsByPlantation(final Long userId, final Long plantationId, final PaginationRequestDto paginationRequest);
 
     void handleSetPlantForUserHarvest(final Long plantId, final Long userHarvestId);
+    void handleStartHarvest(final Long userHarvestId);
+    void handleEndHarvest(final Long userHarvestId);
+    List<HarvestDto> handleGetFutureHarvests();
+
 }

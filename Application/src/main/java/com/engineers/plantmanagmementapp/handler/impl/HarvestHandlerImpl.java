@@ -2,15 +2,19 @@ package com.engineers.plantmanagmementapp.handler.impl;
 
 import com.engineers.plantmanagmementapp.handler.HarvestsHandler;
 import com.engineers.plantmanagmementapp.mapper.HarvestsMapper;
+import com.engineers.plantmanagmementapp.model.User;
 import com.engineers.plantmanagmementapp.repository.*;
 import com.engineers.plantmanagmementapp.rest.harvests.specification.model.*;
 import com.engineers.plantmanagmementapp.service.harvests.HarvestsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * HarvestHandlerImpl - Implementation class of PlantationHandler interface
@@ -31,6 +35,7 @@ public class HarvestHandlerImpl implements HarvestsHandler {
     private final HarvestRepository harvestRepository;
     private final PlantationRepository plantationRepository;
     private final PlantRepository plantRepository;
+    private final UserRepository userRepo;
 
     @Override
     public void handleAddHarvest(final HarvestDto harvestDto) {
@@ -130,5 +135,29 @@ public class HarvestHandlerImpl implements HarvestsHandler {
     public void handleSetPlantForUserHarvest(final Long plantId, final Long userHarvestId) {
         final var plant = plantRepository.findById(plantId).orElseThrow();
         harvestsService.setPlantForUserHarvest(plant, userHarvestId);
+    }
+
+    @Override
+    public void handleStartHarvest(final Long userHarvestId) {
+        harvestsService.startUserHarvest(userHarvestId);
+    }
+
+    @Override
+    public void handleEndHarvest(final Long userHarvestId) {
+        harvestsService.endUserHarvest(userHarvestId);
+    }
+
+    @Override
+    public List<HarvestDto> handleGetFutureHarvests() {
+        final User user = getUserFromContext();
+        return HarvestsMapper.INSTANCE.mapList(harvestsService.getFutureHarvest(user));
+    }
+
+    private User getUserFromContext() {
+        final Authentication authentication = SecurityContextHolder.getContext()
+                .getAuthentication();
+        final String currentPrincipalEmail = authentication.getName();
+        return userRepo.findByEmail(currentPrincipalEmail)
+                .orElseThrow();
     }
 }

@@ -287,6 +287,22 @@ paths:
                 type: array
                 items:
                   $ref: "authentication-specification.yaml#/components/schemas/User"
+  /plantation/get-user-worked-in-plantations:
+    description: |
+      Endpoint for getting list of plantations in which is user working on
+    post:
+      tags:
+        - "Plantation"
+      operationId: getUserWorkedInPlantations
+      responses:
+        "200":
+          description: Ok. Successful response will return OK status and list of PlantationDto objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plantation"
 components:
   schemas:
     Plantation:
