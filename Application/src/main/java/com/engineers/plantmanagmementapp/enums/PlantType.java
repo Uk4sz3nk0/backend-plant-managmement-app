@@ -10,5 +10,6 @@ package com.engineers.plantmanagmementapp.enums;
 public enum PlantType {
 
     FRUIT,
-    VEGETABLE
+    VEGETABLE,
+    UNKNOWN
 }

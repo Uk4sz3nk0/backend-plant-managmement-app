@@ -36,4 +36,6 @@ public interface HarvestRepository extends JpaRepository<Harvest, Long> {
             "AND uh.user.id = :userId " +
             "ORDER BY h.date ASC")
     List<Harvest> findNextHarvestsForUser(@Param("userId") final Long userId, @Param("endDate") final LocalDate endDate);
+
+    Boolean existsByDate(final LocalDate date);
 }

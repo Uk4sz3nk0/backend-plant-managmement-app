@@ -16,9 +16,9 @@ import java.util.List;
 
 public interface HarvestsService {
 
-    void addHarvest(final Harvest harvest, final Plantation plantation);
+    void addHarvest(final Harvest harvest, final Plantation plantation, final List<UserHarvest> userHarvests);
 
-    void addUserHarvest(final UserHarvest userHarvest, final Area sector, final User user, final Harvest harvest);
+    void addUserHarvest(final UserHarvest userHarvest, final Area sector, final User user, final Harvest harvest, final Plant plant);
 
     void deleteHarvest(final Long id);
 

@@ -34,6 +34,7 @@ public abstract class HarvestsMapper {
     @Mapping(target = "sector", ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "harvest", ignore = true)
+    @Mapping(target = "plant", ignore = true)
     public abstract UserHarvest map(final UserHarvestDto userHarvest);
 
     @Mapping(source = "plantation.id", target = "plantationId")
@@ -69,10 +70,11 @@ public abstract class HarvestsMapper {
         return paged;
     }
 
-    @Mapping(target = "harvestId", ignore = true)
-    @Mapping(target = "userId", ignore = true)
-    @Mapping(target = "sectorId", ignore = true)
-    @Mapping(target = "plantationId", ignore = true)
+    @Mapping(target = "harvestId", source = "harvest.id")
+    @Mapping(target = "userId", source = "user.id")
+    @Mapping(target = "sectorId", source = "sector.id")
+    @Mapping(target = "plantId", source = "plant.id")
+    @Mapping(target = "plantationId", source = "plant.id")
     public abstract UserHarvestDto map(final UserHarvest userHarvest);
 
     @Mapping(target = "userHarvests", ignore = true)

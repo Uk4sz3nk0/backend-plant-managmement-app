@@ -33,16 +33,24 @@ public class HarvestsServiceImpl implements HarvestsService {
     private final PlantationRepository plantationRepository;
 
     @Override
-    public void addHarvest(final Harvest harvest, final Plantation plantation) {
+    public void addHarvest(final Harvest harvest, final Plantation plantation, final List<UserHarvest> userHarvests) {
+        if (harvestRepository.existsByDate(harvest.getDate())) {
+            throw new RuntimeException("Harvest with this date is already exists");
+        }
         harvest.setPlantation(plantation);
+        if (!userHarvests.isEmpty()) {
+            userHarvests.forEach(userHarvest -> userHarvest.setHarvest(harvest));
+        }
         harvestRepository.saveAndFlush(harvest);
+        userHarvestRepository.saveAllAndFlush(userHarvests);
     }
 
     @Override
-    public void addUserHarvest(final UserHarvest userHarvest, final Area sector, final User user, final Harvest harvest) {
+    public void addUserHarvest(final UserHarvest userHarvest, final Area sector, final User user, final Harvest harvest, final Plant plant) {
         userHarvest.setHarvest(harvest);
         userHarvest.setSector(sector);
         userHarvest.setUser(user);
+        userHarvest.setPlant(plant);
         harvest.getUserHarvests()
                 .add(userHarvest);
         harvestRepository.saveAndFlush(harvest);
@@ -76,8 +84,6 @@ public class HarvestsServiceImpl implements HarvestsService {
         editUserHarvest.setHarvestEnd(userHarvest.getHarvestEnd());
         editUserHarvest.setSector(sector);
         editUserHarvest.setRow(userHarvest.getRow());
-        // TODO: Implement setting plant
-//        editUserHarvest.setPlantName(userHarvest.getPlantName());
         userHarvestRepository.saveAndFlush(editUserHarvest);
     }
 
